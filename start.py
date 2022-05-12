@@ -33,14 +33,14 @@ def random_penalizacion():
     return str(random.randrange(1,10))
 
 
-def insert_espectaculo(f, n):
+def insert_espectaculos(f, n):
     for i in range(n):
         nombre = "espectaculo {}".format(i)
         productora = "productora {}".format(i)
         participantes = "lista participantes {}".format(i)
         
-        insert = "\nINSERT INTO espectaculo (nombre, tipo, fechaProduccion, productora, participantes, penalizacion, tValidezReserva, tAntelacionReserva, tCancelacion)"
-        values = " VALUES ('" + nombre + "', '" + random_tipo_espectaculo() + "', '" + str(random_fecha_produccion()) + "', '" + productora + "', '" + participantes + "', " + random_penalizacion() + ", 1, 2, 4);"
+        insert = "\nINSERT INTO espectaculo "
+        values = "VALUES ('" + nombre + "', '" + random_tipo_espectaculo() + "', '" + str(random_fecha_produccion()) + "', '" + productora + "', '" + participantes + "', " + random_penalizacion() + ", 1, 2, 4);"
         
         query = insert + values
         f.write(query)
@@ -49,9 +49,9 @@ def insert_espectaculo(f, n):
 ### MAIN FUNCTION ###
 def main():
 
-    create_espectaculo_table = """CREATE TABLE espectaculo (
-    nombre VARCHAR(20) NOT NULL,
-    tipo VARCHAR(20) NOT NULL,
+    create_espectaculos_table = """CREATE TABLE espectaculos (
+    nombreEsp VARCHAR(20) NOT NULL,
+    tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
     participantes VARCHAR(30),
@@ -59,22 +59,168 @@ def main():
     tValidezReserva INT NOT NULL,
     tAntelacionReserva INT NOT NULL,
     tCancelacion INT NOT NULL,
-    PRIMARY KEY(nombre, tipo, fechaProduccion, productora, participantes));"""
+    PRIMARY KEY(nombreEsp, tipoEsp, fechaProduccion, productora));"""
 
-    create_exemplo_table = """
-    CREATE TABLE IF NOT EXISTS exemplo (
-        nombre VARCHAR(20) NOT NULL,
-        tipo VARCHAR(20) NOT NULL,
-        PRIMARY KEY(nombre)
-    );
-    """
+    create_recintos_table = """CREATE TABLE recintos (
+    direccion VARCHAR(30) NOT NULL,
+    nombre VARCHAR(20),
+    PRIMARY KEY(direccion));"""
+
+    create_horarios_table = """CREATE TABLE horarios (
+    fechaYHora VARCHAR(20) NOT NULL,
+    PRIMARY KEY(fechaYHora));"""
+
+    create_horarios_recintos_table = """CREATE TABLE horariosRecintos (
+    fechaYHora VARCHAR(20) NOT NULL,
+    direccion VARCHAR(30) NOT NULL,
+    FOREIGN KEY(fechaYHora) references horarios(fechaYHora),
+    FOREIGN KEY(direccion) references recintos(direccion));"""
+
+    create_evento_table = """CREATE TABLE eventos (
+    nombreEsp VARCHAR(20) NOT NULL,
+    tipoEsp VARCHAR(20) NOT NULL,
+    fechaProduccion DATE NOT NULL,
+    productora VARCHAR(20) NOT NULL,
+    fechaYHora VARCHAR(20) NOT NULL,
+    direccion VARCHAR(30) NOT NULL,
+    FOREIGN KEY(nombreEsp) references espectaculos(nombreEsp),
+    FOREIGN KEY(tipoEsp) references espectaculos(tipoEsp),
+    FOREIGN KEY(fechaProduccion) references espectaculos(fechaProduccion),
+    FOREIGN KEY(productora) references espectaculos(productora),
+    FOREIGN KEY(fechaYHora) references horariosRecintos(fechaYHora),
+    FOREIGN KEY(direccion) references horariosRecintos(direccion));"""
     
+    create_gradas_table = """CREATE TABLE gradas (
+    nombreGrada VARCHAR(20) NOT NULL,
+    nombreEsp VARCHAR(20) NOT NULL,
+    tipoEsp VARCHAR(20) NOT NULL,
+    fechaProduccion DATE NOT NULL,
+    productora VARCHAR(20) NOT NULL,
+    fechaYHora VARCHAR(20) NOT NULL,
+    direccion VARCHAR(30) NOT NULL,
+    FOREIGN KEY(nombreEsp) references espectaculos(nombreEsp),
+    FOREIGN KEY(tipoEsp) references espectaculos(tipoEsp),
+    FOREIGN KEY(fechaProduccion) references espectaculos(fechaProduccion),
+    FOREIGN KEY(productora) references espectaculos(productora),
+    FOREIGN KEY(fechaYHora) references horariosRecintos(fechaYHora),
+    FOREIGN KEY(direccion) references horariosRecintos(direccion),
+    PRIMARY KEY(nombreGrada));"""
+
+    create_localidades_table = """CREATE TABLE localidades (
+    asientoLocalidad INT NOT NULL,
+    nombreGrada VARCHAR(20) NOT NULL,
+    nombreEsp VARCHAR(20) NOT NULL,
+    tipoEsp VARCHAR(20) NOT NULL,
+    fechaProduccion DATE NOT NULL,
+    productora VARCHAR(20) NOT NULL,
+    fechaYHora VARCHAR(20) NOT NULL,
+    direccion VARCHAR(30) NOT NULL,
+    FOREIGN KEY(nombreEsp) references espectaculos(nombreEsp),
+    FOREIGN KEY(tipoEsp) references espectaculos(tipoEsp),
+    FOREIGN KEY(fechaProduccion) references espectaculos(fechaProduccion),
+    FOREIGN KEY(productora) references espectaculos(productora),
+    FOREIGN KEY(fechaYHora) references horariosRecintos(fechaYHora),
+    FOREIGN KEY(direccion) references horariosRecintos(direccion),
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
+    PRIMARY KEY(asientoLocalidad));"""
+
+    create_tarifas_table = """CREATE TABLE tarifas (
+    tipoUsuario VARCHAR(10) NOT NULL,
+    precio INT NOT NULL,
+    maxLocalidadesReserva INT NOT NULL,
+    asientoLocalidad INT NOT NULL,
+    nombreGrada VARCHAR(20) NOT NULL,
+    nombreEsp VARCHAR(20) NOT NULL,
+    tipoEsp VARCHAR(20) NOT NULL,
+    fechaProduccion DATE NOT NULL,
+    productora VARCHAR(20) NOT NULL,
+    fechaYHora VARCHAR(20) NOT NULL,
+    direccion VARCHAR(30) NOT NULL,
+    FOREIGN KEY(nombreEsp) references espectaculos(nombreEsp),
+    FOREIGN KEY(tipoEsp) references espectaculos(tipoEsp),
+    FOREIGN KEY(fechaProduccion) references espectaculos(fechaProduccion),
+    FOREIGN KEY(productora) references espectaculos(productora),
+    FOREIGN KEY(fechaYHora) references horariosRecintos(fechaYHora),
+    FOREIGN KEY(direccion) references horariosRecintos(direccion),
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
+    FOREIGN KEY(asientoLocalidad) references gradas(asientoLocalidad),
+    PRIMARY KEY(tipoUsuario));"""
+
+    create_clientes_table = """CREATE TABLE clientes (
+    correoCliente VARCHAR(30),
+    nombreCliente VARCHAR(20),
+    tltCliente INT(9),
+    datosBanco VARCHAR(20),
+    PRIMARY KEY(correoCliente));"""
+
+    create_entradas_table = """CREATE TABLE entradas (
+    estado VARCHAR(10) NOT NULL,
+    formaPago VARCHAR(10) NOT NULL,
+    horaReserva DATE NOT NULL,
+    correoCliente VARCHAR(20),
+    tipoUsuario VARCHAR(10) NOT NULL,
+    asientoLocalidad INT NOT NULL,
+    nombreGrada VARCHAR(20) NOT NULL,
+    nombreEsp VARCHAR(20) NOT NULL,
+    tipoEsp VARCHAR(20) NOT NULL,
+    fechaProduccion DATE NOT NULL,
+    productora VARCHAR(20) NOT NULL,
+    fechaYHora VARCHAR(20) NOT NULL,
+    direccion VARCHAR(30) NOT NULL,
+    FOREIGN KEY(nombreEsp) references espectaculos(nombreEsp),
+    FOREIGN KEY(tipoEsp) references espectaculos(tipoEsp),
+    FOREIGN KEY(fechaProduccion) references espectaculos(fechaProduccion),
+    FOREIGN KEY(productora) references espectaculos(productora),
+    FOREIGN KEY(fechaYHora) references horariosRecintos(fechaYHora),
+    FOREIGN KEY(direccion) references horariosRecintos(direccion),
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
+    FOREIGN KEY(asientoLocalidad) references gradas(asientoLocalidad),
+    FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario),
+    FOREIGN KEY(correoCliente) references clientes(correoCliente),
+    PRIMARY KEY(horaReserva));"""
+
+    create_cancelaciones_table = """CREATE TABLE cancelaciones (
+    formaPago VARCHAR(10) NOT NULL,
+    horaReserva DATE NOT NULL,
+    correoCliente VARCHAR(20),
+    tipoUsuario VARCHAR(10) NOT NULL,
+    asientoLocalidad INT NOT NULL,
+    nombreGrada VARCHAR(20) NOT NULL,
+    nombreEsp VARCHAR(20) NOT NULL,
+    tipoEsp VARCHAR(20) NOT NULL,
+    fechaProduccion DATE NOT NULL,
+    productora VARCHAR(20) NOT NULL,
+    fechaYHora VARCHAR(20) NOT NULL,
+    direccion VARCHAR(30) NOT NULL,
+    FOREIGN KEY(nombreEsp) references espectaculos(nombreEsp),
+    FOREIGN KEY(tipoEsp) references espectaculos(tipoEsp),
+    FOREIGN KEY(fechaProduccion) references espectaculos(fechaProduccion),
+    FOREIGN KEY(productora) references espectaculos(productora),
+    FOREIGN KEY(fechaYHora) references horariosRecintos(fechaYHora),
+    FOREIGN KEY(direccion) references horariosRecintos(direccion),
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
+    FOREIGN KEY(asientoLocalidad) references gradas(asientoLocalidad),
+    FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario),
+    FOREIGN KEY(correoCliente) references clientes(correoCliente),
+    PRIMARY KEY(horaReserva));"""
+
+
     with open('./data.sql', 'w') as f:
         f.write("DROP DATABASE IF EXISTS proyecto;\n")
         f.write("CREATE DATABASE proyecto;\n")
         f.write("USE proyecto;\n")
-        f.write(create_espectaculo_table + "\n")
-        insert_espectaculo(f, int(sys.argv[1]))
+        f.write(create_espectaculos_table + "\n")
+        f.write(create_horarios_table + "\n")
+        f.write(create_recintos_table + "\n")
+        f.write(create_horarios_recintos_table + "\n")
+        #f.write(create_evento_table + "\n")
+        f.write(create_gradas_table + "\n")
+        #f.write(create_localidades_table + "\n")
+        #f.write(create_tarifas_table + "\n")
+        #f.write(create_clientes_table + "\n")
+        #f.write(create_entradas_table + "\n")
+        #f.write(create_cancelaciones_table + "\n")
+        #insert_espectaculos(f, int(sys.argv[1]))
         
 
     
