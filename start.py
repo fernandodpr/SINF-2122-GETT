@@ -214,7 +214,7 @@ def main():
     FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad),
     FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario),
     FOREIGN KEY(correoCliente) references clientes(correoCliente),
-    PRIMARY KEY(horaReserva)
+    PRIMARY KEY(horaReserva, tipoUsuario, asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
     create_cancelaciones_table = """CREATE TABLE cancelaciones (
@@ -236,7 +236,7 @@ def main():
     FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad),
     FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario),
     FOREIGN KEY(correoCliente) references clientes(correoCliente),
-    PRIMARY KEY(horaReserva)
+    PRIMARY KEY(horaReserva, tipoUsuario, asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
 
