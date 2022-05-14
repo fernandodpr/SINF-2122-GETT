@@ -35,15 +35,31 @@ def random_penalizacion():
 
 def insert_espectaculos(f, n):
     for i in range(n):
-        nombre = "espectaculo {}".format(i)
-        productora = "productora {}".format(i)
-        participantes = "lista participantes {}".format(i)
+        nombre = f"espectaculo {i}"
+        productora = f"productora {i}"
+        participantes = f"lista participantes {i}"
         
-        insert = "\nINSERT INTO espectaculo "
-        values = "VALUES ('" + nombre + "', '" + random_tipo_espectaculo() + "', '" + str(random_fecha_produccion()) + "', '" + productora + "', '" + participantes + "', " + random_penalizacion() + ", 1, 2, 4);"
-        
-        query = insert + values
+        query = f"\nINSERT INTO espectaculos VALUES ('{nombre}', '{random_tipo_espectaculo()}', '{str(random_fecha_produccion())}', '{productora}', '{participantes}', {random_penalizacion()}, 1, 2, 4);"
         f.write(query)
+
+
+def insert_recintos(f, n):
+    for i in range(n):
+        dir = f"Calle de las flores número {i} puerta C"
+        nombre = f"Recinto {i}"
+        
+        query = f"\nINSERT INTO recintos VALUES ('{dir}', '{nombre}');"
+        f.write(query)
+
+
+def insert_eventos(f, n):
+    for i in range(n):
+        nombreEsp = f"evento {i}"
+        nombre = f"Recinto {i}"
+        
+        query = f"\nINSERT INTO recintos VALUES ('{dir}', '{nombre}');"
+        f.write(query)
+
 
 
 ### MAIN FUNCTION ###
@@ -63,7 +79,7 @@ def main():
     );"""
 
     create_recintos_table = """CREATE TABLE recintos (
-    direccion VARCHAR(30) NOT NULL,
+    direccion VARCHAR(50) NOT NULL,
     nombre VARCHAR(20),
     PRIMARY KEY(direccion)
     );"""
@@ -75,7 +91,7 @@ def main():
 
     create_horarios_recintos_table = """CREATE TABLE horariosRecintos (
     fechaYHora VARCHAR(20) NOT NULL,
-    direccion VARCHAR(30) NOT NULL,
+    direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(fechaYHora) references horarios(fechaYHora),
     FOREIGN KEY(direccion) references recintos(direccion),
     primary key(fechaYHora, direccion)
@@ -209,7 +225,10 @@ def main():
         f.write(create_clientes_table + "\n")
         f.write(create_entradas_table + "\n")
         f.write(create_cancelaciones_table + "\n")
-        #insert_espectaculos(f, int(sys.argv[1]))
+
+        if sys.argv[1]:
+            insert_espectaculos(f, int(sys.argv[1]))
+            insert_recintos(f, int(sys.argv[1]))
         
 
     
