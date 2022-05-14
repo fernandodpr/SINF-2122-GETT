@@ -169,7 +169,7 @@ def main():
     );"""
 
     create_tarifas_table = """CREATE TABLE tarifas (
-    tipoUsuario VARCHAR(10) NOT NULL,
+    tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     precio INT NOT NULL,
     maxLocalidadesReserva INT NOT NULL,
     asientoLocalidad INT NOT NULL,
@@ -190,17 +190,17 @@ def main():
     create_clientes_table = """CREATE TABLE clientes (
     correoCliente VARCHAR(30),
     nombreCliente VARCHAR(20),
-    tltCliente INT(9),
+    tlfCliente INT(9),
     datosBanco VARCHAR(20),
     PRIMARY KEY(correoCliente)
     );"""
 
     create_entradas_table = """CREATE TABLE entradas (
-    estado VARCHAR(10) NOT NULL,
-    formaPago VARCHAR(10) NOT NULL,
+    estado ENUM ('pagada', 'prereservada') NOT NULL DEFAULT 'prereservada',
+    formaPago VARCHAR(10) DEFAULT NULL,
     horaReserva DATE NOT NULL,
     correoCliente VARCHAR(20),
-    tipoUsuario VARCHAR(10) NOT NULL,
+    tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     asientoLocalidad INT NOT NULL,
     nombreGrada VARCHAR(20) NOT NULL,
     nombreEsp VARCHAR(20) NOT NULL,
@@ -222,7 +222,7 @@ def main():
     formaPago VARCHAR(10) NOT NULL,
     horaReserva DATE NOT NULL,
     correoCliente VARCHAR(20),
-    tipoUsuario VARCHAR(10) NOT NULL,
+    tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     asientoLocalidad INT NOT NULL,
     nombreGrada VARCHAR(20) NOT NULL,
     nombreEsp VARCHAR(20) NOT NULL,
