@@ -1,13 +1,17 @@
 DELIMITER //
-drop procedure if exists anularReserva
-create procedure anularReserva(
-@id_reserva int,
-@id_cliente int,
-@id_evento int
+DROP PROCEDURE IF EXISTS anularReserva //
+CREATE PROCEDURE anularReserva(
+IN idEntrada  int,
+IN idCliente int,
+IN idEspectaculo int, 
+OUT reembolso float 
 )
-as
-begin
-    declare penalizacion float;
-    declare comienzo timestamp;
+BEGIN
+    DECLARE penalizacion int;
+    DECLARE comienzo timestamp;
+    DECLARE usuario VARCHAR(10);
 
-end
+    SELECT entradas.tipoUsuario INTO usuario FROM entradas WHERE entradas.horaReserva = idEntrada;
+    SELECT espectaculos.penalizacion INTO penalizacion
+    
+END
