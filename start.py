@@ -131,6 +131,7 @@ def main():
     productora VARCHAR(20) NOT NULL,
     fechaYHora VARCHAR(20) NOT NULL,
     direccion VARCHAR(30) NOT NULL,
+    estado varchar(20) not null check (estado='Libre' or estado='Reservado' or estado='Deteriorado'),
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
