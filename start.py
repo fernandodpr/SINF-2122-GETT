@@ -161,6 +161,7 @@ def main():
     productora VARCHAR(20) NOT NULL,
     fechaYHora VARCHAR(20) NOT NULL,
     direccion VARCHAR(50) NOT NULL,
+    estado varchar(20) not null check (estado='Libre' or estado='Reservado' or estado='Deteriorado'),
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
@@ -257,7 +258,7 @@ def main():
         f.write(create_cancelaciones_table + "\n")
 
         if sys.argv[1]:
-            #insert_espectaculos(f, int(sys.argv[1]))
+            insert_espectaculos(f, int(sys.argv[1]))
             insert_horarios(f)
             insert_recintos(f, int(sys.argv[1]))
             insert_horariosRecintos(f, int(sys.argv[1]))
