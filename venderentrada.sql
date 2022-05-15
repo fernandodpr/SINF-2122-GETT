@@ -32,6 +32,7 @@ BEGIN
     SELECT @localidad;
 
     IF (@localidad = 1)THEN
+        SELECT 'Existe la localidad, grada, evento, espectáculo';
         SET @estado := (SELECT estado FROM localidades WHERE  asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
         SET @precio := (SELECT precio FROM tarifas WHERE tipoUsuario=Espectador_tipo AND  nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
         
@@ -86,28 +87,11 @@ BEGIN
             END;
 
         ELSE
-        ##No puede asistir
-        END IF;
-
-        SELECT 'Existe la localidad, grada, evento, espectáculo';
-        #Puede este tipo de público acudir a este evento??
-        #Creo que lo suyo sería hacer un inner join pero es que con esta mierda de las claves deja de tener sentido.
-        SET @precio := (SELECT precio FROM tarifas WHERE tipoUsuario=Espectador_tipo AND asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
-
-        IF ( true ) THEN
-            SELECT NULL;
+            ##No puede asistir
+            SELECT "Este tipo de espectador no puede asistir a esta grada"
         END IF;
 
 
-    END IF;
-
-
-IF ((SELECT COUNT(*) FROM eventos WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion ) > 0 ) THEN
-        SELECT 'Existe este evento, vamos a seguir comprobando cosas';
-        
-        
-    ELSE
-        SELECT 'No se puede realizar la reserva, no existe el evento.';
     END IF;
 END//
 DELIMITER ;
