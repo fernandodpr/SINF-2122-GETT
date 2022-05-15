@@ -43,7 +43,7 @@ BEGIN
             SELECT 'El tipo de usuario puede asistir a esta grada.';
 
             CASE
-                WHEN @estado='Deteriodado' THEN
+                WHEN @estado='Deteriorado' THEN
                     ##No se puede reservar ni comprar
                     SELECT 'Esta localidad está deteriorada.';
                 WHEN @estado='Reservado' THEN
