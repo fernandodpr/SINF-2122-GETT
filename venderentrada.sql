@@ -25,9 +25,13 @@ BEGIN
     IF ((SELECT COUNT(*) FROM eventos WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion ) > 0 ) THEN
         SELECT 'Existe este evento, vamos a seguir comprobando cosas';
 		
+            IF((SELECT COUNT(*) FROM gradas WHERE nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion ) > 0 )) THEN
+
+            ELSE
+            END IF;
         
     ELSE
-        SELECT 'No se puede realizar la reserva, no existe el evento';
+        SELECT 'No se puede realizar la reserva, no existe el evento.';
     END IF;
 END//
 DELIMITER ;
