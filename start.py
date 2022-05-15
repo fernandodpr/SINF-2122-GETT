@@ -257,12 +257,12 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    estado ENUM ('Libre', 'Reservado', 'Prereservado', 'Deteriodado') NOT NULL DEFAULT 'Libre',
+    estado ENUM ('Libre', 'Reservado', 'Prereservado', 'Deteriorado') NOT NULL DEFAULT 'Libre',  
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
     PRIMARY KEY(asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
-    );"""
+    );"""		##estado reservado indica pagado de cualquier forma, prereservado no puede ser en efectivo
 
     create_tarifas_table = """CREATE TABLE tarifas (
     tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
