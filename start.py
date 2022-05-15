@@ -81,6 +81,10 @@ def insert_horariosRecintos(f, n):
         f.write(query)
 
 
+def insert_localidades(inserts, m, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, dir):
+    for i in range(m):
+        inserts.append(f"\nINSERT INTO localidades (asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion) VALUES ({i},'{nombreGrada}', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora}', '{dir}');")
+
 def insert_eventos(f, n):
 
     # datos estaticos
@@ -101,6 +105,7 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
     
     inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    insert_localidades(inserts, 30, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1')
     inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
     inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
     inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
@@ -127,6 +132,7 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
         
     inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    insert_localidades(inserts, 30,'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2')
     inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
     inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
     inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
@@ -154,10 +160,12 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO eventos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     
     inserts.append("\nINSERT INTO gradas VALUES ('grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
+    insert_localidades(inserts, 50, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo')
     inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 20, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 12, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     
     inserts.append("\nINSERT INTO gradas VALUES ('grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
+    insert_localidades(inserts, 50, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo')
     inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 18, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 10, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
 
@@ -218,8 +226,8 @@ def main():
     create_horarios_recintos_table = """CREATE TABLE horariosRecintos (
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    FOREIGN KEY(fechaYHora) references horarios(fechaYHora),
-    FOREIGN KEY(direccion) references recintos(direccion),
+    FOREIGN KEY(fechaYHora) references horarios(fechaYHora) ON DELETE CASCADE,
+    FOREIGN KEY(direccion) references recintos(direccion) ON DELETE CASCADE,
     primary key(fechaYHora, direccion)
     );"""
 
@@ -230,8 +238,8 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
-    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
+    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora) ON DELETE CASCADE,
+    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion) ON DELETE CASCADE,
     primary key (nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
@@ -243,8 +251,8 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
-    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
+    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora) ON DELETE CASCADE,
+    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion) ON DELETE CASCADE,
     PRIMARY KEY(nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
@@ -257,7 +265,7 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    estado ENUM ('Libre', 'Reservado', 'Prereservado', 'Deteriodado') NOT NULL DEFAULT 'Libre',
+    estado ENUM ('Libre', 'Reservado', 'Prereservado', 'Deteriodado') DEFAULT 'Libre',
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
