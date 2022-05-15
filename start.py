@@ -207,12 +207,12 @@ def main():
     );"""
 
     create_horarios_table = """CREATE TABLE horarios (
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     PRIMARY KEY(fechaYHora)
     );"""
 
     create_horarios_recintos_table = """CREATE TABLE horariosRecintos (
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(fechaYHora) references horarios(fechaYHora),
     FOREIGN KEY(direccion) references recintos(direccion),
@@ -224,7 +224,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -237,7 +237,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -251,7 +251,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     estado ENUM ('Libre', 'Reservado', 'Deteriodado') NOT NULL DEFAULT 'Libre',
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
@@ -269,7 +269,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -297,7 +297,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -319,7 +319,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
