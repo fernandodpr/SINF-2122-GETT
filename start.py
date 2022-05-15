@@ -65,7 +65,7 @@ def insert_recintos(f, n):
 
 
 def insert_horarios(f):
-    query = f"\nINSERT INTO horarios VALUES ('3 agosto 8 pm');"
+    query = f"\nINSERT INTO horarios VALUES ('2022-07-01');"
     f.write(query)
 
 
@@ -73,7 +73,7 @@ def insert_horariosRecintos(f, n):
     for i in range(n):
         dir = f"Calle de las flores número {i} puerta C"
 
-        query = f"\nINSERT INTO horariosRecintos VALUES ('3 agosto 8 pm', '{dir}');"
+        query = f"\nINSERT INTO horariosRecintos VALUES ('2022-07-01', '{dir}');"
         f.write(query)
 
 
@@ -88,13 +88,13 @@ def insert_eventos(f, n):
 
         query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, 1, 2, 4);"
         f.write(query)
-        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '3 agosto 8 pm', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
         f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '3 agosto 8 pm', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
         f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '3 agosto 8 pm', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
         f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '3 agosto 8 pm', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
         f.write(query)
 
 
@@ -124,12 +124,12 @@ def main():
     );"""
 
     create_horarios_table = """CREATE TABLE horarios (
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     PRIMARY KEY(fechaYHora)
     );"""
 
     create_horarios_recintos_table = """CREATE TABLE horariosRecintos (
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(fechaYHora) references horarios(fechaYHora),
     FOREIGN KEY(direccion) references recintos(direccion),
@@ -141,7 +141,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -154,7 +154,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -168,7 +168,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     estado varchar(20) not null check (estado='Libre' or estado='Reservado' or estado='Deteriorado'),
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
@@ -187,7 +187,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -216,7 +216,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -238,7 +238,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora VARCHAR(20) NOT NULL,
+    fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
