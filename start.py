@@ -192,10 +192,10 @@ def insert_eventos(f, n):
 def main():
 
     create_espectaculos_table = """CREATE TABLE espectaculos (
-    nombreEsp VARCHAR(20) NOT NULL,
-    tipoEsp VARCHAR(20) NOT NULL,
+    nombreEsp VARCHAR(30) NOT NULL,
+    tipoEsp VARCHAR(30) NOT NULL,
     fechaProduccion DATE NOT NULL,
-    productora VARCHAR(20) NOT NULL,
+    productora VARCHAR(30) NOT NULL,
     participantes VARCHAR(30),
     penalizacion INT NOT NULL,
     tValidezReserva INT NOT NULL,
@@ -224,10 +224,10 @@ def main():
     );"""
 
     create_evento_table = """CREATE TABLE eventos (
-    nombreEsp VARCHAR(20) NOT NULL,
-    tipoEsp VARCHAR(20) NOT NULL,
+    nombreEsp VARCHAR(30) NOT NULL,
+    tipoEsp VARCHAR(30) NOT NULL,
     fechaProduccion DATE NOT NULL,
-    productora VARCHAR(20) NOT NULL,
+    productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
@@ -236,11 +236,11 @@ def main():
     );"""
 
     create_gradas_table = """CREATE TABLE gradas (
-    nombreGrada VARCHAR(20) NOT NULL,
-    nombreEsp VARCHAR(20) NOT NULL,
-    tipoEsp VARCHAR(20) NOT NULL,
+    nombreGrada VARCHAR(30) NOT NULL,
+    nombreEsp VARCHAR(30) NOT NULL,
+    tipoEsp VARCHAR(30) NOT NULL,
     fechaProduccion DATE NOT NULL,
-    productora VARCHAR(20) NOT NULL,
+    productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
@@ -250,14 +250,14 @@ def main():
 
     create_localidades_table = """CREATE TABLE localidades (
     asientoLocalidad INT NOT NULL,
-    nombreGrada VARCHAR(20) NOT NULL,
-    nombreEsp VARCHAR(20) NOT NULL,
-    tipoEsp VARCHAR(20) NOT NULL,
+    nombreGrada VARCHAR(30) NOT NULL,
+    nombreEsp VARCHAR(30) NOT NULL,
+    tipoEsp VARCHAR(30) NOT NULL,
     fechaProduccion DATE NOT NULL,
-    productora VARCHAR(20) NOT NULL,
+    productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    estado ENUM ('Libre', 'Reservado', 'Deteriodado') NOT NULL DEFAULT 'Libre',
+    estado ENUM ('Libre', 'Reservado', 'Prereservado', 'Deteriodado') NOT NULL DEFAULT 'Libre',
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
@@ -268,11 +268,11 @@ def main():
     tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     precio INT NOT NULL,
     maxLocalidadesReserva INT NOT NULL,
-    nombreGrada VARCHAR(20) NOT NULL,
-    nombreEsp VARCHAR(20) NOT NULL,
-    tipoEsp VARCHAR(20) NOT NULL,
+    nombreGrada VARCHAR(30) NOT NULL,
+    nombreEsp VARCHAR(30) NOT NULL,
+    tipoEsp VARCHAR(30) NOT NULL,
     fechaProduccion DATE NOT NULL,
-    productora VARCHAR(20) NOT NULL,
+    productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
@@ -283,24 +283,23 @@ def main():
 
     create_clientes_table = """CREATE TABLE clientes (
     correoCliente VARCHAR(30),
-    nombreCliente VARCHAR(20),
+    nombreCliente VARCHAR(30),
     tlfCliente INT(9),
-    datosBanco VARCHAR(20),
+    datosBanco VARCHAR(30),
     PRIMARY KEY(correoCliente)
     );"""
 
     create_entradas_table = """CREATE TABLE entradas (
-    estado ENUM ('pagada', 'prereservada') NOT NULL DEFAULT 'prereservada',
-    formaPago VARCHAR(10) DEFAULT NULL,
+    formaPago VARCHAR(20) DEFAULT NULL,
     horaReserva DATE NOT NULL,
-    correoCliente VARCHAR(20),
+    correoCliente VARCHAR(30),
     tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     asientoLocalidad INT NOT NULL,
-    nombreGrada VARCHAR(20) NOT NULL,
-    nombreEsp VARCHAR(20) NOT NULL,
-    tipoEsp VARCHAR(20) NOT NULL,
+    nombreGrada VARCHAR(30) NOT NULL,
+    nombreEsp VARCHAR(30) NOT NULL,
+    tipoEsp VARCHAR(30) NOT NULL,
     fechaProduccion DATE NOT NULL,
-    productora VARCHAR(20) NOT NULL,
+    productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
@@ -313,16 +312,16 @@ def main():
     );"""
 
     create_cancelaciones_table = """CREATE TABLE cancelaciones (
-    formaPago VARCHAR(10) NOT NULL,
+    formaPago VARCHAR(20) NOT NULL,
     horaReserva DATE NOT NULL,
-    correoCliente VARCHAR(20),
+    correoCliente VARCHAR(30),
     tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     asientoLocalidad INT NOT NULL,
-    nombreGrada VARCHAR(20) NOT NULL,
-    nombreEsp VARCHAR(20) NOT NULL,
-    tipoEsp VARCHAR(20) NOT NULL,
+    nombreGrada VARCHAR(30) NOT NULL,
+    nombreEsp VARCHAR(30) NOT NULL,
+    tipoEsp VARCHAR(30) NOT NULL,
     fechaProduccion DATE NOT NULL,
-    productora VARCHAR(20) NOT NULL,
+    productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
