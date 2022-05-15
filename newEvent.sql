@@ -9,7 +9,7 @@ CREATE PROCEDURE nuevoEvento(
 	IN TipoEspec VARCHAR(20),
 	IN FechaProduc DATE,
 	IN productorain VARCHAR(20),
-	IN horario VARCHAR(20),
+	IN horario DATE,
 	IN Recinto VARCHAR(50)
 )
 BEGIN
