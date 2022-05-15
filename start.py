@@ -65,9 +65,9 @@ def insert_recintos(f, n):
 
 
 def insert_horarios(f):
-    query = f"\nINSERT INTO horarios VALUES ('2022-07-01');"
+    query = f"\nINSERT INTO horarios VALUES ('2022-09-01 18:00:00');"
     f.write(query)
-    query = f"\nINSERT INTO horarios VALUES ('2021-07-01');"
+    query = f"\nINSERT INTO horarios VALUES ('2021-09-01 18:00:00');"
     f.write(query)
 
 
@@ -75,9 +75,9 @@ def insert_horariosRecintos(f, n):
     for i in range(n):
         dir = f"Calle de las flores número {i} puerta C"
 
-        query = f"\nINSERT INTO horariosRecintos VALUES ('2022-09-01', '{dir}');"
+        query = f"\nINSERT INTO horariosRecintos VALUES ('2022-09-01 18:00:00', '{dir}');"
         f.write(query)
-        query = f"\nINSERT INTO horariosRecintos VALUES ('2021-09-01', '{dir}');"
+        query = f"\nINSERT INTO horariosRecintos VALUES ('2021-09-01 18:00:00', '{dir}');"
         f.write(query)
 
 
@@ -90,8 +90,13 @@ def insert_eventos(f, n):
     
     # isto dos recintos e horarios hai q conseguir q se metan automatico q senon...
     inserts.append("\nINSERT INTO recintos VALUES ('Cines Gran Via Vigo sala 1', 'Cine Gran Via');")
+    inserts.append("\nINSERT INTO recintos VALUES ('Cines Gran Via Vigo sala 2', 'Cine Gran Via');")
+    inserts.append("\nINSERT INTO recintos VALUES ('Auditorio Mar de Vigo', 'Auditorio Mar de Vigo');")
     inserts.append("\nINSERT INTO horarios VALUES ('2022-07-01 19:00:00');")
-    inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO horarios VALUES ('2022-07-10 20:30:00');")
+    inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
 
     inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
     
@@ -117,18 +122,17 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
     inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
     '''
-    '''
+    
     # rey leon a mesma hora q o anterior pero noutra sala, para todo o publico pero distintos prezos
-    inserts.append("\nINSERT INTO espectaculos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', 'dibujos animados', 3, 1, 2, 4);")
-    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
         
-    inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
-    '''
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    
     '''comentado para tes so unha grada nunha sala, de querer máis descomentar
     inserts.append("\nINSERT INTO gradas VALUES ('grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
     inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
@@ -144,20 +148,20 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
     inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
     '''
-    '''
+    
     # teatro para adultos e xubilados con varias gradas
     inserts.append("\nINSERT INTO espectaculos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', 'Pedro Gomez - Laura Perez', 5, 1, 2, 4);")
-    inserts.append("\nINSERT INTO eventos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO eventos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     
-    inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 20, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 12, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO gradas VALUES ('grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 20, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 12, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     
-    inserts.append("\nINSERT INTO gradas VALUES ('grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 18, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
-    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 10, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO gradas VALUES ('grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 18, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 10, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
 
-    '''
+    
     for i in range(len(inserts)):
         f.write(inserts[i])
 
@@ -171,13 +175,13 @@ def insert_eventos(f, n):
 
         query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, 1, 2, 4);"
         f.write(query)
-        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-07-01', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)
 
 
@@ -202,7 +206,7 @@ def main():
 
     create_recintos_table = """CREATE TABLE recintos (
     direccion VARCHAR(50) NOT NULL,
-    nombre VARCHAR(20),
+    nombre VARCHAR(30),
     PRIMARY KEY(direccion)
     );"""
 
