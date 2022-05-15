@@ -10,7 +10,6 @@ INSTRUCCIÓNS:
 import random
 import sys
 
-
 def random_tipo_espectaculo():
     tipos = ["concierto", "entrevista", "teatro", "pelicula", "deportivo"]
     i = random.randrange(0, len(tipos))
@@ -22,9 +21,9 @@ def random_fecha_produccion():
     mes = str(random.randrange(1, 12))
     dia = str(random.randrange(1, 28))
 
-    if len(mes) == 1: 
+    if len(mes) == 1:
         mes = '0' + mes
-    if len(dia) == 1: 
+    if len(dia) == 1:
         dia = '0' + dia
     return "{}-{}-{}".format(anho, mes, dia)
 
@@ -32,6 +31,16 @@ def random_fecha_produccion():
 def random_penalizacion():
     return str(random.randrange(1,10))
 
+def insert_clientes(f):
+    lista = [0,1,2,3,4]
+    correos = ["alba@gmail.com", "omar@gmail.com", "dario@gmail.com", "martina@gmail.com", "fernando@gmail.com"]
+    personas = ["Alba", "Omar", "Dario", "Martina", "Fernando"]
+    telefonos = [123456789, 147258369, 987654321, 258369147, 369147258]
+    banco = ["ES15753123", "ES15753123", "ES15753123", "ES15753123", "ES15753123"]
+
+    for i in lista:
+      query = f"\nINSERT INTO clientes VALUES ('{correos[i]}', '{personas[i]}', '{telefonos[i]}', '{banco[i]}');"
+      f.write(query)
 
 def insert_espectaculos(f, n):
     for i in range(n):
@@ -41,7 +50,7 @@ def insert_espectaculos(f, n):
         productora = f"productora {i}"
         participantes = f"lista participantes {i}"
         penalizacion = random_penalizacion()
-        
+
         query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, 1, 2, 4);"
         f.write(query)
 
@@ -50,7 +59,7 @@ def insert_recintos(f, n):
     for i in range(n):
         dir = f"Calle de las flores número {i} puerta C"
         nombre = f"Recinto {i}"
-        
+
         query = f"\nINSERT INTO recintos VALUES ('{dir}', '{nombre}');"
         f.write(query)
 
@@ -63,7 +72,7 @@ def insert_horarios(f):
 def insert_horariosRecintos(f, n):
     for i in range(n):
         dir = f"Calle de las flores número {i} puerta C"
-        
+
         query = f"\nINSERT INTO horariosRecintos VALUES ('3 agosto 8 pm', '{dir}');"
         f.write(query)
 
@@ -76,7 +85,7 @@ def insert_eventos(f, n):
         productora = f"productora {i}"
         participantes = f"lista participantes {i}"
         penalizacion = random_penalizacion()
-        
+
         query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, 1, 2, 4);"
         f.write(query)
         query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '3 agosto 8 pm', 'Calle de las flores número {i} puerta C');"
@@ -138,7 +147,7 @@ def main():
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     primary key (nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
-    
+
     create_gradas_table = """CREATE TABLE gradas (
     nombreGrada VARCHAR(20) NOT NULL,
     nombreEsp VARCHAR(20) NOT NULL,
@@ -258,13 +267,14 @@ def main():
         f.write(create_cancelaciones_table + "\n")
 
         if sys.argv[1]:
+            insert_clientes(f)
             insert_espectaculos(f, int(sys.argv[1]))
             insert_horarios(f)
             insert_recintos(f, int(sys.argv[1]))
             insert_horariosRecintos(f, int(sys.argv[1]))
             insert_eventos(f, int(sys.argv[1]))
 
-    
+
 
 if __name__ == "__main__":
     main()
