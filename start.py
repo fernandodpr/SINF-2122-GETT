@@ -67,17 +67,100 @@ def insert_recintos(f, n):
 def insert_horarios(f):
     query = f"\nINSERT INTO horarios VALUES ('2022-07-01');"
     f.write(query)
+    query = f"\nINSERT INTO horarios VALUES ('2021-07-01');"
+    f.write(query)
 
 
 def insert_horariosRecintos(f, n):
     for i in range(n):
         dir = f"Calle de las flores número {i} puerta C"
 
-        query = f"\nINSERT INTO horariosRecintos VALUES ('2022-07-01', '{dir}');"
+        query = f"\nINSERT INTO horariosRecintos VALUES ('2022-09-01', '{dir}');"
+        f.write(query)
+        query = f"\nINSERT INTO horariosRecintos VALUES ('2021-09-01', '{dir}');"
         f.write(query)
 
 
 def insert_eventos(f, n):
+
+    # datos estaticos
+    ## rey leon nunha sala para todo o publico pero distintos prezos
+    inserts = []
+    inserts.append("\nINSERT INTO espectaculos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', 'dibujos animados', 3, 1, 2, 4);")
+    
+    # isto dos recintos e horarios hai q conseguir q se metan automatico q senon...
+    inserts.append("\nINSERT INTO recintos VALUES ('Cines Gran Via Vigo sala 1', 'Cine Gran Via');")
+    inserts.append("\nINSERT INTO horarios VALUES ('2022-07-01 19:00:00');")
+    inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+
+    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+   
+    ''' comentado para tes so unha grada nunha sala, de querer máis descomentar
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 7, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 10, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 12, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 7, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")    
+    
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 1');")
+    '''
+    '''
+    # rey leon a mesma hora q o anterior pero noutra sala, para todo o publico pero distintos prezos
+    inserts.append("\nINSERT INTO espectaculos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', 'dibujos animados', 3, 1, 2, 4);")
+    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+        
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    '''
+    '''comentado para tes so unha grada nunha sala, de querer máis descomentar
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 7, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 10, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 12, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 7, 5, 'grada 2', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")    
+
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('bebe', 0, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('infantil', 5, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('juvenil', 8, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 10, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 5, 5, 'grada 3', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo, sala 2');")
+    '''
+    '''
+    # teatro para adultos e xubilados con varias gradas
+    inserts.append("\nINSERT INTO espectaculos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', 'Pedro Gomez - Laura Perez', 5, 1, 2, 4);")
+    inserts.append("\nINSERT INTO eventos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    
+    inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 20, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 12, 5, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    
+    inserts.append("\nINSERT INTO gradas VALUES ('grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 18, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 10, 5, 'grada superior', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 19:00:00', 'Auditorio Mar de Vigo');")
+
+    '''
+    for i in range(len(inserts)):
+        f.write(inserts[i])
+
     for i in range(n):
         nombreEsp = f"espectaculo {i}"
         tipoEsp = random_tipo_espectaculo()
@@ -170,7 +253,7 @@ def main():
     productora VARCHAR(20) NOT NULL,
     fechaYHora DATE NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    estado varchar(20) not null check (estado='Libre' or estado='Reservado' or estado='Deteriorado'),
+    estado ENUM ('Libre', 'Reservado', 'Deteriodado') NOT NULL DEFAULT 'Libre',
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
@@ -181,7 +264,6 @@ def main():
     tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     precio INT NOT NULL,
     maxLocalidadesReserva INT NOT NULL,
-    asientoLocalidad INT NOT NULL,
     nombreGrada VARCHAR(20) NOT NULL,
     nombreEsp VARCHAR(20) NOT NULL,
     tipoEsp VARCHAR(20) NOT NULL,
@@ -192,8 +274,7 @@ def main():
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
-    FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad),
-    PRIMARY KEY(tipoUsuario, asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
+    PRIMARY KEY(tipoUsuario, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
     create_clientes_table = """CREATE TABLE clientes (
