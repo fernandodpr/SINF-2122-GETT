@@ -16,14 +16,23 @@ CREATE PROCEDURE venderentrada(
 
 )
 BEGIN
- ###### Primero comprobamos si esa entrada ya existe
+ 
  ###### Existe este evento?
  ###### Existe esta grada?
+ ###### Puede ese tipo de público acudir a esa grada? 
  ###### Se puede reservar la localidad?
  ###### Realizar reserva
-    IF ((SELECT COUNT(*) FROM horariosRecintos WHERE direccion=Recinto AND fechaYHora=horario) < 1) THEN
-        SELECT 'No se ha encotrado la tupla horario-recinto';
-		INSERT INTO horariosRecintos VALUES (horario, Recinto);	
+    IF ((SELECT COUNT(*) FROM eventos WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion ) > 0 ) THEN
+        SELECT 'Existe este evento, vamos a seguir comprobando cosas';
+		
+        
+    ELSE
+        SELECT 'No se puede realizar la reserva, no existe el evento';
     END IF;
 END//
 DELIMITER ;
+
+
+
+##Comandos de prueba
+#venderentrada('Adulto','3','Sur','espectaculo 0','teatro','1998-09-10','productora 0','3 agosto 8 pm','Calle de las flores número 0 puerta C')
