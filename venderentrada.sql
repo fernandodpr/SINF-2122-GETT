@@ -91,7 +91,7 @@ BEGIN
                 ELSE 
                    SELECT 'A';
                 
-            END
+            END CASE;
 
        
         END IF;
