@@ -37,33 +37,37 @@ BEGIN
         SET @precio := (SELECT precio FROM tarifas WHERE tipoUsuario=Espectador_tipo AND  nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
         
         IF (NOT @precio=NULL) THEN
+
             SELECT 'El tipo de usuario puede asistir a esta grada.';
+
             CASE
                 WHEN @estado='Deteriodado' THEN
                     ##No se puede reservar ni comprar
-                    SELECT "Esta localidad está deteriorada."
+                    SELECT 'Esta localidad está deteriorada.';
                 WHEN @estado='Reservado' THEN
                     ##Ocupado
-                    SELECT "Esta localidad ha sido reservada con anterioridad."
+                    SELECT 'Esta localidad ha sido reservada con anterioridad.';
 
                 WHEN @estado='Libre' THEN
                     ##Se puede reservar o comprar, revisamos modo?
-                    IF (modo = 'Comprar') THEN
-                        IF (NOT METODOPAGO='Efectivo') THEN
+                    IF (modo='Comprar') THEN
+                        IF (NOT Entrada_pago='Efectivo') THEN
                             ##Sólo se puede comprar directamente en ventanilla
+                            SELECT 'Solo se puede comprar directamente en ventanilla';
                         ELSE
                             INSERT INTO entradas VALUES('Efectivo',NOW(),NULL,Espectador_tipo,Asiento,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
                             UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                         END IF;
                       
-                    ELSE IF (modo = 'preReservar') THEN
+                    ELSE
                         UPDATE localidades SET estado='Prereservado' WHERE  asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
 
                     END IF;
                 
                 WHEN @estado='Prereservado' THEN
-                    ##Sólo se puede comprar
-                    IF (modo = 'Comprar') THEN
+                   
+                    IF(modo='Comprar') THEN
+
                         IF ((SELECT correoCliente FROM entradas WHERE formaPago=NULL 
                                     AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre 
                                     AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora
@@ -79,24 +83,22 @@ BEGIN
                             ##EL CLIENTE QUE QUIERE COMPRAR NO ES EL MISMO QUE HA REALIZADO LA RESERVA
                             SELECT 'El cliente que quiere comprar no es el mismo que el que reservo';
                         END IF;
+
                     ELSE
                         ##Esta localidad está prereservada, sólo disponible para compra
-                        SELECT 'Ejecute el método en modo compra, la localidad ha sido reservada con anterioridad.'
-                    END;
-                ELSE "The quantity is under 30"
-            END;
+                        SELECT 'Ejecute el método en modo compra, la localidad ha sido reservada con anterioridad.';
+                    END IF;
+                ELSE 
+                   SELECT 'A';
+                
+            END
 
-        ELSE
-            ##No puede asistir
-            SELECT "Este tipo de espectador no puede asistir a esta grada"
+       
         END IF;
 
 
     END IF;
+
 END//
+
 DELIMITER ;
-
-
-
-##Comandos de prueba
-#venderentrada('Adulto','3','Sur','espectaculo 0','teatro','1998-09-10','productora 0','3 agosto 8 pm','Calle de las flores número 0 puerta C')
