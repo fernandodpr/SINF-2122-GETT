@@ -124,12 +124,12 @@ def main():
     );"""
 
     create_horarios_table = """CREATE TABLE horarios (
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     PRIMARY KEY(fechaYHora)
     );"""
 
     create_horarios_recintos_table = """CREATE TABLE horariosRecintos (
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(fechaYHora) references horarios(fechaYHora),
     FOREIGN KEY(direccion) references recintos(direccion),
@@ -141,7 +141,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -154,7 +154,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -168,9 +168,9 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    estado varchar(20) not null check (estado='Libre' or estado='Reservado' or estado='Deteriorado'),
+    estado enum('Libre', 'Reservado', 'Deteriorado'),
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
@@ -181,19 +181,17 @@ def main():
     tipoUsuario ENUM ('bebe', 'infantil', 'juvenil', 'adulto', 'jubilado') NOT NULL,
     precio INT NOT NULL,
     maxLocalidadesReserva INT NOT NULL,
-    asientoLocalidad INT NOT NULL,
     nombreGrada VARCHAR(20) NOT NULL,
     nombreEsp VARCHAR(20) NOT NULL,
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
     FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
-    FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad),
-    PRIMARY KEY(tipoUsuario, asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
+    PRIMARY KEY(tipoUsuario, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
     create_clientes_table = """CREATE TABLE clientes (
@@ -216,7 +214,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
@@ -238,7 +236,7 @@ def main():
     tipoEsp VARCHAR(20) NOT NULL,
     fechaProduccion DATE NOT NULL,
     productora VARCHAR(20) NOT NULL,
-    fechaYHora DATE NOT NULL,
+    fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
