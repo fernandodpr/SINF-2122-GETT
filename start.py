@@ -35,7 +35,7 @@ def random_penalizacion():
 
 
 def random_tValidezReserva():
-    return str(random.randrange(2,10))
+    return str(random.randrange(10,20))
 
 
 def random_tAntelacionReserva():
@@ -45,7 +45,6 @@ def random_tAntelacionReserva():
 def random_tCancelacion():
     return str(random.randrange(15, 30))
     
-
 
 def insert_clientes(f):
     lista = [0,1,2,3,4]
@@ -101,10 +100,8 @@ def insert_horariosRecintos(f, n):
 
 
 def insert_localidades(inserts, m, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, dir):
-    estados = ['Libre', 'Reservado', 'Prereservado', 'Deteriorado']
     for i in range(m):
-        estado = random.choices(estados, weights = [15, 3, 5, 3], k=1)
-        inserts.append(f"\nINSERT INTO localidades VALUES ({i},'{nombreGrada}', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora}', '{dir}', '{estado}');")
+        inserts.append(f"\nINSERT INTO localidades VALUES ({i},'{nombreGrada}', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora}', '{dir}', 'Libre');")
 
 def insert_eventos(f, n):
 
