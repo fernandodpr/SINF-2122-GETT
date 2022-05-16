@@ -123,7 +123,7 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
     inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
 
-    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
+    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1','Abierto');")
 
     inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
     insert_localidades(inserts, 30, 'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1')
@@ -143,7 +143,7 @@ def insert_eventos(f, n):
     '''
 
     # rey leon a mesma hora q o anterior pero noutra sala, para todo o publico pero distintos prezos
-    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
+    inserts.append("\nINSERT INTO eventos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2','Abierto');")
 
     inserts.append("\nINSERT INTO gradas VALUES ('grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
     insert_localidades(inserts, 30,'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2')
@@ -164,7 +164,7 @@ def insert_eventos(f, n):
     
     # teatro para adultos e xubilados con varias gradas
     inserts.append("\nINSERT INTO espectaculos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', 'Pedro Gomez - Laura Perez', 5, '00:01:00', '00:02:00', '00:04:00');")
-    inserts.append("\nINSERT INTO eventos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
+    inserts.append("\nINSERT INTO eventos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo','Abierto');")
 
     inserts.append("\nINSERT INTO gradas VALUES ('grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     insert_localidades(inserts, 50, 'grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo')
@@ -193,7 +193,7 @@ def insert_eventos(f, n):
 
         query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, '00:{tValidezReserva}:00', '00:{tAntelacionReserva}:00', '00:{tCancelacion}:00');"
         f.write(query)
-        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
+        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C','Abierto');"
         f.write(query)
         query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)
@@ -245,6 +245,7 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
+    estado ENUM ('Abierto', 'Cerrado', 'Finalizado') NOT NULL DEFAULT 'Abierto',
     FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora) ON DELETE CASCADE,
     FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion) ON DELETE CASCADE,
     primary key (nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
