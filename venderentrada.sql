@@ -1,5 +1,4 @@
-USE proyecto;
-##Quitar mais tarde, duplicado
+
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS venderentrada//

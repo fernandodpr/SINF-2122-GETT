@@ -10,7 +10,7 @@ USE proyecto;
 \. newEvent.sql
 \. realizarReserva.sql
 \. tarifas.sql
-\. verderentrada.sql
+\. venderentrada.sql
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS buscarEventosPorTipo//

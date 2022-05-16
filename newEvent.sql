@@ -1,5 +1,3 @@
-
-USE proyecto;
 DELIMITER //
 
 DROP PROCEDURE IF EXISTS nuevoEvento;
