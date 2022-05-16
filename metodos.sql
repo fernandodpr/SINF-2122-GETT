@@ -1,6 +1,16 @@
 USE proyecto;
 
 \. venderentrada.sql
+\. anularReserva.sql
+\. consultarEvento.sql
+\. crearEspectaculo.sql
+\. eventoScrubEstadoEvento.sql
+\. eventoScrubEstadoPreReserva.sql
+\. localidadDeteriorada.sql
+\. newEvent.sql
+\. realizarReserva.sql
+\. tarifas.sql
+\. verderentrada.sql
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS buscarEventosPorTipo//
