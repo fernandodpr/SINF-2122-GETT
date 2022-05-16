@@ -19,7 +19,6 @@ SELECT localidades.estado INTO estado FROM localidades WHERE localidades.asiento
 
 IF correoCliente = idCliente then
     IF estado = 'Reservado' then
-        SELECT 'NO ENTIENDO NADA';
         IF now() < comienzoEvento then
             SELECT timestampdiff(MINUTE, now(), comienzoEvento) INTO minutos;
             IF minutos < tCancelacion THEN
