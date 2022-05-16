@@ -34,7 +34,10 @@ BEGIN
     END IF;
 
 	INSERT IGNORE INTO eventos (nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion) VALUES (espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
-	
+	INSERT IGNORE INTO gradas VALUES ('Default Grada',espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
+	INSERT IGNORE INTO localidades VALUES (1,'Default Grada',espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto,'Libre');
+	INSERT IGNORE INTO tarifas VALUES ('adulto',2,1,'Default Grada',espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
+
 END //
 
 DELIMITER ;
