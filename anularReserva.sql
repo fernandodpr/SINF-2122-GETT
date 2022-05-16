@@ -28,7 +28,9 @@ IF correoCliente = idCliente then
             ELSE
                 DELETE FROM entradas WHERE entradas.correoCliente = idCliente AND entradas.horaReserva = idReserva AND entradas.nombreEsp = idEspectaculo;
                 UPDATE localidades SET estado = "Libre" WHERE estado = "Reservado" AND localidades.asientoLocalidad = localidad AND localidades.nombreGrada = grada AND localidades.nombreEsp = idEspectaculo AND localidades.fechaProduccion = produccion;
+                
                 SET reembolso = precio;
+                SELECT reembolso;
             END IF;
         ELSE
             SELECT 'Ya comenzo el evento. No puede cancelar la reserva';
