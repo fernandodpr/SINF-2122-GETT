@@ -1,5 +1,3 @@
-
-
 DROP PROCEDURE IF EXISTS consultarEvento;
 
 DELIMITER //
