@@ -193,9 +193,6 @@ def insert_eventos(f, n):
         f.write(query)
 
 
-
-
-
 ### MAIN FUNCTION ###
 def main():
 
@@ -266,9 +263,9 @@ def main():
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
     estado ENUM ('Libre', 'Reservado', 'Prereservado', 'Deteriorado') NOT NULL DEFAULT 'Libre',  
-    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
-    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
-    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
+    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora) ON DELETE CASCADE,
+    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion) ON DELETE CASCADE,
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada) ON DELETE CASCADE,
     PRIMARY KEY(asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""		##estado reservado indica pagado de cualquier forma, prereservado no puede ser en efectivo
 
@@ -283,9 +280,9 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
-    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
-    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
+    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora) ON DELETE CASCADE,
+    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion) ON DELETE CASCADE,
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada) ON DELETE CASCADE,
     PRIMARY KEY(tipoUsuario, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
@@ -310,12 +307,12 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
-    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
-    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
-    FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad),
-    FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario),
-    FOREIGN KEY(correoCliente) references clientes(correoCliente),
+    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora) ON DELETE CASCADE,
+    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion) ON DELETE CASCADE,
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada) ON DELETE CASCADE,
+    FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad) ON DELETE CASCADE,
+    FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario) ON DELETE CASCADE,
+    FOREIGN KEY(correoCliente) references clientes(correoCliente) ON DELETE CASCADE,
     PRIMARY KEY(horaReserva, tipoUsuario, asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
@@ -332,12 +329,12 @@ def main():
     productora VARCHAR(30) NOT NULL,
     fechaYHora DATETIME NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora),
-    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion),
-    FOREIGN KEY(nombreGrada) references gradas(nombreGrada),
-    FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad),
-    FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario),
-    FOREIGN KEY(correoCliente) references clientes(correoCliente),
+    FOREIGN KEY(nombreEsp, tipoEsp, fechaProduccion, productora) references espectaculos(nombreEsp, tipoEsp, fechaProduccion, productora) ON DELETE CASCADE,
+    FOREIGN KEY(fechaYHora, direccion) references horariosRecintos(fechaYHora, direccion) ON DELETE CASCADE,
+    FOREIGN KEY(nombreGrada) references gradas(nombreGrada) ON DELETE CASCADE,
+    FOREIGN KEY(asientoLocalidad) references localidades(asientoLocalidad) ON DELETE CASCADE,
+    FOREIGN KEY(tipoUsuario) references tarifas(tipoUsuario) ON DELETE CASCADE,
+    FOREIGN KEY(correoCliente) references clientes(correoCliente) ON DELETE CASCADE,
     PRIMARY KEY(horaReserva, tipoUsuario, asientoLocalidad, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion)
     );"""
 
