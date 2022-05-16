@@ -38,16 +38,20 @@ BEGIN
         SET @precio := (SELECT precio FROM tarifas WHERE tipoUsuario=Espectador_tipo AND  nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
         
         SELECT @PRECIO;
-        SELECT  (@precio IS NOT NULL);
+        
         IF (@precio IS NOT NULL) THEN
-            SET @maxLocalidadesReserva := SELECT maxLocalidadesReserva
-                                            FROM tarifas WHERE tipoUsuario=Espectador_tipo AND  nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
-            SET @locLibres : = SELECT COUNT(*) FROM localidades WHERE estado='Libre' AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion); 
+            SET @maximo := (SELECT maxLocalidadesReserva FROM tarifas WHERE 
+                tipoUsuario=Espectador_tipo AND  nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre 
+                AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora 
+                AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
+
+
+            SET @locLibres := (SELECT COUNT(*) FROM localidades WHERE estado='Libre' AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion); 
 
             SELECT 'El tipo de usuario puede asistir a esta grada.';
-            IF (maxLocalidadesReserva < Num_localidades) THEN
+            IF (@maximo < Num_localidades) THEN
                 SELECT 'Esta superando el limite de localidades por reserva permitido.';
-            ELSE IF (locLibres<Num_localidades) THEN
+            ELSEIF (@locLibres<Num_localidades) THEN
                 SELECT 'La cantidad de localidades libres es inferior a las deseadas.'; 
             ELSE
                 
@@ -75,16 +79,16 @@ BEGIN
                                     SELECT 'Solo se puede comprar directamente en ventanilla';
                                     LEAVE bucle;
                                 ELSE
-                                    INSERT INTO entradas VALUES('Efectivo',NOW(),NULL,Espectador_tipo,Asiento,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
-                                    UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
+                                    INSERT INTO entradas VALUES('Efectivo',NOW(),NULL,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
+                                    UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                                     SET @contador_exitos = @contador_exitos + 1;
                                 END IF;
                             
                             ELSE
                                 ##Modo reservar
                                 IF (Cliente_correo IS NOT NULL) THEN
-                                    UPDATE localidades SET estado='Prereservado' WHERE  asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
-                                    INSERT INTO entradas VALUES('Prereserva',NOW(),Cliente_correo,Espectador_tipo,Asiento,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
+                                    UPDATE localidades SET estado='Prereservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
+                                    INSERT INTO entradas VALUES('Prereserva',NOW(),Cliente_correo,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
                                     SET @contador_exitos = @contador_exitos + 1;
                                 ELSE
                                     SELECT 'Para realizar una prereserva el cliente debe de identificarse';
@@ -99,7 +103,7 @@ BEGIN
                                             AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre 
                                             AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora
                                             AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
-                                            AND asientoLocalidad=Asiento AND nombreGrada=Grada_nombre);
+                                            AND asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre);
                                 SELECT @aux;
                                 IF (@aux=Cliente_correo) THEN
 
@@ -108,9 +112,10 @@ BEGIN
                                             UPDATE entradas SET formaPago=Entrada_pago,horaReserva=NOW() WHERE nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre 
                                             AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora
                                             AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
-                                            AND asientoLocalidad=Asiento AND nombreGrada=Grada_nombre;
-                                            INSERT INTO entradas VALUES(Entrada_pago,NOW(),Cliente_correo,Espectador_tipo,Asiento,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
-                                            UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
+                                            AND asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre;
+
+                                            #INSERT INTO entradas VALUES(Entrada_pago,NOW(),Cliente_correo,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
+                                            UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                                             SET @contador_exitos = @contador_exitos + 1;
                                 ELSE
                                     ##EL CLIENTE QUE QUIERE COMPRAR NO ES EL MISMO QUE HA REALIZADO LA RESERVA
@@ -138,7 +143,7 @@ BEGIN
 
             END IF;
         ELSE
-            SELECT 'no entra';
+            SELECT 'El tipo de usuario no puede asistir a esta grada.';
         END IF;
 
 
@@ -147,30 +152,4 @@ BEGIN
 END//
 
 DELIMITER ;
-
-
-
-
-
-                           bucle:LOOP
-                           
-                               SET @compra := (SELECT asientoLocalidad
-                                               FROM localidades
-                                               WHERE nombreEsp=NomEsp AND tipoEsp=TipoEsp 
-                                                   AND fechaProduccion=FechaProdEsp AND productora=ProdEsp
-                                                   AND fechaYHora = HoraEvento AND direccion = Direccion
-                                                   AND nombreGrada = Grada AND estado = 'Libre'
-                                                   LIMIT 1);
-                               
-                               INSERT INTO entradas values('prereservada', NULL, NOW(), NULL, UsuarioReserva, @compra, Grada, NomEsp, TipoEsp, FechaProdEsp, ProdEsp, HoraEvento, Direccion);
-                               
-                               UPDATE localidades SET estado = 'Reservado' WHERE asientoLocalidad = @compra;
-                               
-                               SET @i = @i + 1;
-                           
-                               IF (@i = Num_localidades) THEN
-                                   LEAVE bucle;
-                               END IF;
-                               
-                           
-                           END LOOP bucle;
+  
