@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS nuevoEvento;
 CREATE PROCEDURE nuevoEvento(
 	IN espectaculo VARCHAR(20),
 	IN TipoEspec VARCHAR(20),
-	IN FechaProduc DATE,
+	IN FechaProduc DATETIME,
 	IN productorain VARCHAR(20),
 	IN horario DATETIME,
 	IN Recinto VARCHAR(50)
