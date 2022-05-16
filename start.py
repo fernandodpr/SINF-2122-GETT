@@ -67,7 +67,7 @@ def insert_espectaculos(f, n):
         participantes = f"lista participantes {i}"
         penalizacion = random_penalizacion()
 
-        query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, 1, 2, 4);"
+        query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, '00:01:00', '00:02:00', '00:04:00');"
         f.write(query)
 
 
@@ -108,7 +108,7 @@ def insert_eventos(f, n):
     # datos estaticos
     ## rey leon nunha sala para todo o publico pero distintos prezos
     inserts = []
-    inserts.append("\nINSERT INTO espectaculos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', 'dibujos animados', 3, 1, 2, 4);")
+    inserts.append("\nINSERT INTO espectaculos VALUES ('Rey Leon', 'pelicula', '1994-01-01', 'Disney', 'dibujos animados', 3, '00:01:00', '00:02:00', '00:04:00');")
 
     # isto dos recintos e horarios hai q conseguir q se metan automatico q senon...
     inserts.append("\nINSERT INTO recintos VALUES ('Cines Gran Via Vigo sala 1', 'Cine Gran Via');")
@@ -160,7 +160,7 @@ def insert_eventos(f, n):
      '''
     
     # teatro para adultos e xubilados con varias gradas
-    inserts.append("\nINSERT INTO espectaculos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', 'Pedro Gomez - Laura Perez', 5, 1, 2, 4);")
+    inserts.append("\nINSERT INTO espectaculos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', 'Pedro Gomez - Laura Perez', 5, '00:01:00', '00:02:00', '00:04:00');")
     inserts.append("\nINSERT INTO eventos VALUES ('Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
 
     inserts.append("\nINSERT INTO gradas VALUES ('grada centro', 'Romeo y Julieta', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
@@ -188,7 +188,7 @@ def insert_eventos(f, n):
         tAntelacionReserva = random_tAntelacionReserva()
         tCancelacion = random_tCancelacion()
 
-        query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, {tValidezReserva}, {tAntelacionReserva}, {tCancelacion});"
+        query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, '00:{tValidezReserva}:00', '00:{tAntelacionReserva}:00', '00:{tCancelacion}:00');"
         f.write(query)
         query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)
