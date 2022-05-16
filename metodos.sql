@@ -1,5 +1,7 @@
 USE proyecto;
 
+\. venderentrada.sql
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS buscarEventosPorTipo//
 CREATE PROCEDURE buscarEventosPorTipo(IN tipo VARCHAR(30))
