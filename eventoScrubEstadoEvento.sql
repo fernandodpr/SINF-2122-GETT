@@ -1,8 +1,9 @@
-SET GLOBAL event_scheduler = ON;
-#SET GLOBAL event_scheduler = OFF;
-USE proyecto;
-DROP EVENT IF EXISTS ScrubEventos;
 DELIMITER //
+SET GLOBAL event_scheduler = ON//
+#SET GLOBAL event_scheduler = OFF//
+USE proyecto//
+DROP EVENT IF EXISTS ScrubEventos//
+
 CREATE EVENT ScrubEventos
   ON SCHEDULE EVERY 1 MINUTE STARTS NOW()
   ON COMPLETION PRESERVE
