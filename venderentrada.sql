@@ -7,17 +7,17 @@ CREATE PROCEDURE venderentrada(
    
     IN Espectador_tipo varchar(10),
     IN Asiento INT,
-    IN Grada_nombre VARCHAR(20),
-    IN Espectaculo_nombre VARCHAR(20),
-    IN Espectaculo_tipo VARCHAR(20),
+    IN Grada_nombre VARCHAR(30),
+    IN Espectaculo_nombre VARCHAR(30),
+    IN Espectaculo_tipo VARCHAR(30),
     IN Espectaculo_fecha DATE,
-    IN Espectaculo_productora VARCHAR(20),
-    IN Evento_fecha VARCHAR(20),
+    IN Espectaculo_productora VARCHAR(30),
+    IN Evento_fecha VARCHAR(30),
     IN Evento_direccion varchar(50),
     IN Cliente_correo varchar(30),
     IN modo varchar(30),
-    IN Entrada_pago VARCHAR(20)
-
+    IN Entrada_pago VARCHAR(30)
+CALL venderentrada('infantil',3,'grada 1', 'Rey Leon','pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1', 'martina@gmail.com', 'Comprar', 'Prereserva');
 )
 ##MODO: Reserva, metodo de pago
 
