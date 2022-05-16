@@ -41,8 +41,9 @@ create procedure localidadDeteriorada(in asiento int, in nomGrada varchar(30), i
 					and direccion = direc
 					group by nombreGrada
 				);			
-			insert into gradas values('Exceso', nomEsp, tipo, fechaP, produ, fecha, direc);
-			if (asientosExceso is null) then insert into localidades values(1, 'Exceso', nomEsp, tipo, fechaP, produ, fecha, direc, estadoViejo);
+			if (asientosExceso is null) then 
+				insert into gradas values('Exceso', nomEsp, tipo, fechaP, produ, fecha, direc);
+				insert into localidades values(1, 'Exceso', nomEsp, tipo, fechaP, produ, fecha, direc, estadoViejo);
 			else insert into localidades values(asientosExceso+1, 'Exceso', nomEsp, tipo, fechaP, produ, fecha, direc, estadoViejo);
 			end if;
 		else
