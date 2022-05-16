@@ -1,5 +1,3 @@
-
-USE proyecto;
 DROP PROCEDURE IF EXISTS consultarEvento;
 
 DELIMITER //

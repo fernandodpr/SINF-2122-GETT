@@ -4,29 +4,20 @@ DROP PROCEDURE IF EXISTS anularReserva//
 CREATE PROCEDURE anularReserva(
 IN idReserva DATETIME, #horaReserva
 IN idCliente VARCHAR(20),  #correo del cliente
-IN idEspectaculo VARCHAR(20), #nombre del espectaculo
-OUT reembolso INT
+IN idEspectaculo VARCHAR(20) #nombre del espectaculo
 )
 BEGIN
 DECLARE correoCliente,estado, grada varchar(20);
-DECLARE penalizacion,localidad,minutos, tCancelacion int;
+DECLARE penalizacion,localidad,minutos,tCancelacion, precio int;
 DECLARE produccion DATE;
 DECLARE comienzoEvento DATETIME;
+DECLARE reembolso float;
+DECLARE tipoUsuario VARCHAR(20);
 
-SELECT entradas.correoCliente, entradas.asientoLocalidad, entradas.fechaProduccion, entradas.nombreGrada, entradas.fechaYHora 
-INTO correoCliente, localidad, produccion, grada, comienzoEvento 
-FROM entradas 
-WHERE entradas.correoCliente = idCliente AND entradas.horaReserva = idReserva AND entradas.nombreEsp = idEspectaculo;
-
-SELECT espectaculos.penalizacion, espectaculos.tCancelacion 
-INTO penalizacion, tCancelacion 
-FROM espectaculos 
-WHERE espectaculos.nombreEsp = idEspectaculo AND espectaculos.fechaProduccion = produccion;
-
-SELECT localidades.estado 
-INTO estado 
-FROM localidades 
-WHERE localidades.asientoLocalidad = localidad AND localidades.nombreGrada = grada AND localidades.nombreEsp = idEspectaculo AND localidades.fechaProduccion = produccion;
+SELECT entradas.correoCliente, entradas.asientoLocalidad, entradas.fechaProduccion, entradas.nombreGrada, entradas.fechaYHora, entradas.tipoUsuario INTO correoCliente, localidad, produccion, grada, comienzoEvento,tipoUsuario FROM entradas WHERE entradas.correoCliente = idCliente AND entradas.horaReserva = idReserva AND entradas.nombreEsp = idEspectaculo;
+SELECT espectaculos.penalizacion, espectaculos.tCancelacion INTO penalizacion, tCancelacion FROM espectaculos WHERE espectaculos.nombreEsp = idEspectaculo AND espectaculos.fechaProduccion = produccion;
+SELECT localidades.estado INTO estado FROM localidades WHERE localidades.asientoLocalidad = localidad AND localidades.nombreGrada = grada AND localidades.nombreEsp = idEspectaculo AND localidades.fechaProduccion = produccion;
+SELECT tarifas.precio INTO precio FROM tarifas WHERE tarifas.nombreEsp = idEspectaculo AND tarifas.nombreGrada = grada AND tarifas.tipoUsuario = tipoUsuario AND tarifas.asientoLocalidad = localidad AND tarifas.FechaYHora = comienzoEvento AND tarifas.fechaProduccion = produccion;
 
 IF correoCliente = idCliente then
     IF estado = 'Reservado' then
@@ -39,9 +30,7 @@ IF correoCliente = idCliente then
             ELSE
                 DELETE FROM entradas WHERE entradas.correoCliente = idCliente AND entradas.horaReserva = idReserva AND entradas.nombreEsp = idEspectaculo;
                 UPDATE localidades SET estado = "Libre" WHERE estado = "Reservado" AND localidades.asientoLocalidad = localidad AND localidades.nombreGrada = grada AND localidades.nombreEsp = idEspectaculo AND localidades.fechaProduccion = produccion;
-                
                 SET reembolso = precio;
-                SELECT reembolso;
             END IF;
         ELSE
             SELECT 'Ya comenzo el evento. No puede cancelar la reserva';
@@ -55,6 +44,8 @@ ELSE
     SELECT 'La reserva no se encuentra en la base de datos';
     SET reembolso = 0;
 END IF;
+
+Select 'Reembolso: '+reembolso;
 END
 //
 DELIMITER ;
