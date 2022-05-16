@@ -35,7 +35,7 @@ BEGIN
 		CALL crearEspectaculo(espectaculo,TipoEspec,FechaProduc,productorain, NULL, 0,0,0,0);	
     END IF;
 
-	INSERT IGNORE INTO eventos VALUES (espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
+	INSERT IGNORE INTO eventos (nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion) VALUES (espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
 	
 END //
 
