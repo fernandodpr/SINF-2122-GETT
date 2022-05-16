@@ -203,9 +203,9 @@ def main():
     productora VARCHAR(30) NOT NULL,
     participantes VARCHAR(30),
     penalizacion INT NOT NULL,
-    tValidezReserva INT NOT NULL,
-    tAntelacionReserva INT NOT NULL,
-    tCancelacion INT NOT NULL,
+    tValidezReserva TIME NOT NULL,
+    tAntelacionReserva TIME NOT NULL,
+    tCancelacion TIME NOT NULL,
     PRIMARY KEY(nombreEsp, tipoEsp, fechaProduccion, productora)
     );"""
 
@@ -357,7 +357,7 @@ def main():
 
         if sys.argv[1]:
             insert_clientes(f)
-            insert_espectaculos(f, int(sys.argv[1]))
+           # insert_espectaculos(f, int(sys.argv[1]))
             insert_horarios(f)
             insert_recintos(f, int(sys.argv[1]))
             insert_horariosRecintos(f, int(sys.argv[1]))
