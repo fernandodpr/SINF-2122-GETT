@@ -16,3 +16,14 @@ DO
                 AND eventos.fechaProduccion=espectaculos.fechaProduccion;
 
     UPDATE eventos,espectaculos SET eventos.estado='Cerrado' WHERE SUBTIME( LastModifiedDate, MINUTOS(pero tienen que estar en TIME)) )=Now();
+    
+  
+    SELECT espectaculos.nombreEsp,eventos.tipoEsp ,tValidezReserva, tAntelacionReserva, tCancelacion  FROM eventos INNER JOIN espectaculos ON eventos.nombreEsp=espectaculos.nombreEsp AND eventos.tipoEsp=espectaculos.tipoEsp AND eventos.productora=espectaculos.productora AND eventos.fechaProduccion=espectaculos.fechaProduccion;
+    
+    UPDATE eventos SET Estado='Cerrado' WHERE 
+                                tAntelacionReserva < MINUTE((SELECT fechaYHora FROM espectaculos, eventos WHERE espectaculo.nombreEsp = eventos.nombreEsp AND espectaculo.tipoEsp = eventos.nombreEsp  
+                                AND espectaculo.fechaProduccion = eventos.fechaProduccion AND espectaculo.productora = eventos.productora) - now());
+
+    UPDATE eventos INNER JOIN espectaculos ON eventos.nombreEsp=espectaculos.nombreEsp AND eventos.tipoEsp=espectaculos.tipoEsp AND eventos.productora=espectaculos.productora AND eventos.fechaProduccion=espectaculos.fechaProduccion
+    SET eventos.estado='Cerrado'  
+    WHERE SUBTIME(eventos.fechaYHora,espectaculos.tAntelacionReserva)<NOW();  

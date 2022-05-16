@@ -1,0 +1,1 @@
+INSERT INTO eventos VALUES('espectaculo caducado','test','2010-01-01','test','2022-05-16','Calle de las flores número 0 puerta C','Abierto');
