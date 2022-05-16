@@ -58,6 +58,7 @@ def insert_clientes(f):
       query = f"\nINSERT INTO clientes VALUES ('{correos[i]}', '{personas[i]}', '{telefonos[i]}', '{banco[i]}');"
       f.write(query)
 
+''' este metodo non se usa, creamos os espectaculos no metodo insert_eventos
 def insert_espectaculos(f, n):
     for i in range(n):
         nombreEsp = f"espectaculo {i}"
@@ -69,6 +70,8 @@ def insert_espectaculos(f, n):
 
         query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, '00:01:00', '00:02:00', '00:04:00');"
         f.write(query)
+'''
+
 
 
 def insert_recintos(f, n):
