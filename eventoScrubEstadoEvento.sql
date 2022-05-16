@@ -15,4 +15,4 @@ DO
                 AND eventos.tipoEsp=espectaculos.tipoEsp AND eventos.productora=espectaculos.productora 
                 AND eventos.fechaProduccion=espectaculos.fechaProduccion;
 
-    UPDATE eventos,espectaculos SET eventos.estado='Cerrado' WHERE SUBTIME( LastModifiedDate, )=Now();
+    UPDATE eventos,espectaculos SET eventos.estado='Cerrado' WHERE SUBTIME( LastModifiedDate, MINUTOS(pero tienen que estar en TIME)) )=Now();
