@@ -7,7 +7,7 @@ CREATE PROCEDURE nuevoEvento(
 	IN TipoEspec VARCHAR(20),
 	IN FechaProduc DATE,
 	IN productorain VARCHAR(20),
-	IN horario DATE,
+	IN horario DATETIME,
 	IN Recinto VARCHAR(50)
 )
 BEGIN
@@ -29,8 +29,8 @@ BEGIN
 
 
 	IF ((SELECT COUNT(*) FROM espectaculos WHERE nombreEsp=espectaculo AND tipoEsp=TipoEspec AND fechaProduccion=FechaProduc AND productora=productorain) < 1) THEN
-        SELECT 'No se ha encotrado este espectaculo, creando uno nuevo.';
-		CALL crearEspectaculo(espectaculo,TipoEspec,FechaProduc,productorain, NULL, 0,0,0,0);	
+        SELECT 'No se ha encotrado este espectaculo, creando uno nuevo. parametros de tiempo por defecto';
+		CALL crearEspectaculo(espectaculo,TipoEspec,FechaProduc,productorain, NULL,0,'00:05:00','00:05:00','00:30:00');	
     END IF;
 
 	INSERT IGNORE INTO eventos (nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora, direccion) VALUES (espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
