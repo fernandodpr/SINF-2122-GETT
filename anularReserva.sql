@@ -16,12 +16,13 @@ SELECT espectaculos.penalizacion INTO penalizacion FROM espectaculos WHERE espec
 SELECT localidades.estado INTO estado FROM localidades WHERE localidades.asientoLocalidad = localidad AND localidades.nombreGrada = grada AND localidades.nombreEsp = idEspectaculo AND localidades.fechaProduccion = produccion;
 
 IF correoCliente = idCliente then
-    IF estado = 'Reservado' then SELECT 'Asiento reservado';
-    ELSEIF estado = 'Pre-reservado' then SELECT 'Asiento preReservado';
+    IF estado = 'Reservado' then
+        DELETE FROM entradas WHERE entradas.correoCliente = idCliente AND entradas.horaReserva = idReserva AND entradas.nombreEsp = idEspectaculo;
+        UPDATE localidades SET estado = "Libre" WHERE estado = "Reservado" AND localidades.asientoLocalidad = localidad AND localidades.nombreGrada = grada AND localidades.nombreEsp = idEspectaculo AND localidades.fechaProduccion = produccion;
     ELSE SELECT 'Asiento no disponible';
     END IF;
 ELSE
-SELECT '>La reserva no se encuentra en la base de datos';
+    SELECT 'La reserva no se encuentra en la base de datos';
 END IF;
 END
 //
