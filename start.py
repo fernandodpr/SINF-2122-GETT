@@ -362,6 +362,8 @@ def main():
             insert_recintos(f, int(sys.argv[1]))
             insert_horariosRecintos(f, int(sys.argv[1]))
             insert_eventos(f, int(sys.argv[1]))
+        
+        f.write("\nSELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'proyecto';")
 
 
 
