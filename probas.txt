@@ -1,0 +1,7 @@
+1) consultar os estados das localidades dun evento:
+CALL consultarEvento('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1','grada 1');
+
+2) consultar os prezos dunha grada para un evento: 
+* en proceso *
+
+3) 

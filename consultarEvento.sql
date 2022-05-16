@@ -53,7 +53,7 @@ BEGIN
             
             END IF;
             
-            SELECT asientoLocalidad AS Localidad, estado, nombreGrada AS Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProduccion AS Produccion, 
+            SELECT asientoLocalidad AS Localidad, estado AS Estado, nombreGrada AS Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProduccion AS Produccion, 
             fechaYHora as Horario, direccion AS Direccion_recinto
             FROM localidades 
             WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
