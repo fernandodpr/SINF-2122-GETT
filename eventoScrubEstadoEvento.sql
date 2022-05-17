@@ -17,3 +17,6 @@ BEGIN
 
     UPDATE eventos SET eventos.estado='Finalizado' WHERE eventos.fechaYHora<NOW();
 END //
+
+delimiter ;
+

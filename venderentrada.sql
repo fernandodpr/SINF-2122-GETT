@@ -68,19 +68,20 @@ BEGIN
                             SELECT 'Esta localidad está deteriorada.';
                         WHEN @estado='Reservado' THEN
                             ##Ocupado
-                            SELECT 'Esta localidad ha sido reservada con anterioridad.';
+                            SELECT 'Esta localidad ha sido reservada con anterioridad. Te buscamos una disponible.';
 
                         WHEN @estado='Libre' THEN
                             ##Se puede reservar o comprar, revisamos modo?
                             IF (modo='Comprar') THEN
                                 IF (NOT Entrada_pago='Efectivo') THEN
                                     ##Sólo se puede comprar directamente en ventanilla
-                                    SELECT 'Solo se puede comprar directamente en ventanilla';
+                                    SELECT 'Solo se puede comprar directamente en ventanilla y en efectivo.';
                                     LEAVE bucle;
                                 ELSE
                                     INSERT INTO entradas VALUES('Efectivo',NOW(),NULL,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
                                     UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                                     SET @contador_exitos = @contador_exitos + 1;
+                                    SELECT 'Comprar en ventanilla y efectivo hecha correctamente.';
                                 END IF;
                             
                             ELSE
@@ -89,8 +90,10 @@ BEGIN
                                     UPDATE localidades SET estado='Prereservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                                     INSERT INTO entradas VALUES('Prereserva',NOW(),Cliente_correo,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
                                     SET @contador_exitos = @contador_exitos + 1;
+                                    SELECT 'Prereserva realizada. Cubre los demás datos de registro para poder hacer el pago.';
+
                                 ELSE
-                                    SELECT 'Para realizar una prereserva el cliente debe de identificarse';
+                                    SELECT 'Para realizar una prereserva el cliente debe dar su correo electrónico.';
                                     LEAVE bucle;
                                 END IF; 
                             END IF;

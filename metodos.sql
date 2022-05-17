@@ -1,7 +1,7 @@
 USE proyecto;
 
 \. venderentrada.sql
-\. anularReserva.sql
+/*\. anularReserva.sql*/
 \. consultarEvento.sql
 \. crearEspectaculo.sql
 \. eventoScrubEstadoEvento.sql

@@ -198,7 +198,15 @@ def insert_eventos(f, n):
         f.write(query)
         query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)
-
+        
+        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C','Abierto');"
+        f.write(query)
+        query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
+        f.write(query)
+        query = f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
+        f.write(query)
+        query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
+        f.write(query)
 
 ### MAIN FUNCTION ###
 def main():

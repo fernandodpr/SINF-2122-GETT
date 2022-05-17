@@ -4,7 +4,9 @@ CALL consultarEvento('Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01
 2) consultar os prezos dunha grada para un evento:
 * en proceso *
 
-3) reservar entrada sen rexistro
+# DEIXAR CLARO QUE POÑASE O NUMERO Q SE POÑA DE ASIENTO, SE NON ESTÁ DISPOÑIBLE DASE O SEGUINTE
+# NULL, Comprar, Efectivo
+3) reservar entrada sen rexistro: non fai falta correo nen tipo pago ()
 CALL venderentrada('Infantil', 1,'grada 1', 'Rey Leon', 'pelicula', '1994-01-01', 'Disney', '2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2', 'null', 'Comprar', 'Efectivo', 3);
 
 
