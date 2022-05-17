@@ -48,7 +48,7 @@ BEGIN
             
             SELECT Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProd AS Produccion, 
             Evento_fecha as Horario, Evento_direccion AS Direccion_recinto
-            FROM evento
+            FROM eventos
             WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion;
             
             SELECT precio AS Precio, tipoUsuario AS Usuario 
