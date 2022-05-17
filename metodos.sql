@@ -1,11 +1,11 @@
 USE proyecto;
 
 \. venderentrada.sql
-/*\. anularReserva.sql*/
+\. anularReserva.sql
 \. consultarEvento.sql
 \. crearEspectaculo.sql
 \. eventoScrubEstadoEvento.sql
-/*\. eventoScrubEstadoPreReserva.sql*/
+\. eventoScrubEstadoPreReserva.sql
 \. localidadDeteriorada.sql
 \. newEvent.sql
 \. realizarReserva.sql

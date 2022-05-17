@@ -77,15 +77,17 @@ BEGIN
                             WHEN @estado='Libre' THEN
                                 ##Se puede reservar o comprar, revisamos modo?
                                 IF (modo='Comprar') THEN
-                                    IF (NOT Entrada_pago='Efectivo') THEN
-                                        ##Sólo se puede comprar directamente en ventanilla
-                                        SELECT 'Solo se puede comprar directamente en ventanilla y en efectivo.';
-                                        LEAVE bucle;
-                                    ELSE
-                                        INSERT INTO entradas VALUES('Efectivo',NOW(),NULL,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
+                                    IF (Entrada_pago='Efectivo') THEN
+                                        INSERT INTO entradas VALUES('Efectivo',NOW(),Cliente_correo,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
                                         UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                                         SET @contador_exitos = @contador_exitos + 1;
                                         SELECT 'Comprar en ventanilla y efectivo hecha correctamente.';
+                                        
+                                    ELSE
+                                        ##Sólo se puede comprar directamente en ventanilla
+                                        SELECT 'Solo se puede comprar directamente en ventanilla y en efectivo.';
+                                        LEAVE bucle;
+                                        
                                     END IF;
                                 
                                 ELSE
