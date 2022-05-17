@@ -11,6 +11,10 @@ CREATE PROCEDURE nuevoEvento(
 	IN Recinto VARCHAR(50)
 )
 BEGIN
+
+        DECLARE inicio TIMESTAMP(6);
+    
+        SET inicio = CURRENT_TIMESTAMP(6);       
 	
 	IF ((SELECT COUNT(*) FROM horarios WHERE fechaYHora=horario) < 1) THEN
         SELECT 'No se ha encotrado un horario con estos datos. Creado uno nuevo.';
@@ -37,6 +41,8 @@ BEGIN
 	INSERT IGNORE INTO gradas VALUES ('Default Grada',espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
 	INSERT IGNORE INTO localidades VALUES (1,'Default Grada',espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto,'Libre');
 	INSERT IGNORE INTO tarifas VALUES ('adulto',2,1,'Default Grada',espectaculo, TipoEspec, FechaProduc, productorain, horario, Recinto);
+	
+	SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
 
 END //
 
