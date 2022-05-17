@@ -16,22 +16,10 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS buscarEventosPorTipo//
 CREATE PROCEDURE buscarEventosPorTipo(IN tipo VARCHAR(30))
 BEGIN 
-<<<<<<< HEAD
     DECLARE inicio TIMESTAMP(6);
     SET inicio = CURRENT_TIMESTAMP(6);
     SELECT nombreEsp, tipoEsp, direccion, fechaYHora FROM eventos WHERE tipoEsp=tipo;
     SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
-=======
-
-    DECLARE inicio TIMESTAMP(6);
-    
-    SET inicio = CURRENT_TIMESTAMP(6);
-
-    SELECT nombreEsp, tipoEsp, direccion, fechaYHora FROM eventos WHERE tipoEsp=tipo;
-    
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
-    
->>>>>>> e0c54948c515f8297b69345eb75bb0e76709ab8d
 END
 //
 
@@ -39,19 +27,9 @@ END
 DROP PROCEDURE IF EXISTS listarEventosPorTipo//
 CREATE PROCEDURE listarEventosPorTipo()
 BEGIN 
-<<<<<<< HEAD
     DECLARE inicio TIMESTAMP(6);
     SET inicio = CURRENT_TIMESTAMP(6);
     SELECT tipoEsp, nombreEsp, direccion, fechaYHora FROM eventos ORDER BY tipoEsp;
-=======
-
-    DECLARE inicio TIMESTAMP(6);
-    
-    SET inicio = CURRENT_TIMESTAMP(6);
-
-    SELECT tipoEsp, nombreEsp, direccion, fechaYHora FROM eventos ORDER BY tipoEsp;
-  
->>>>>>> e0c54948c515f8297b69345eb75bb0e76709ab8d
     SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
 END
 //
@@ -60,16 +38,8 @@ END
 DROP PROCEDURE IF EXISTS listarEventosDisponibles//
 CREATE PROCEDURE listarEventosDisponibles()
 BEGIN 
-<<<<<<< HEAD
     DECLARE inicio TIMESTAMP(6);
     SET inicio = CURRENT_TIMESTAMP(6);
-=======
-
-    DECLARE inicio TIMESTAMP(6);
-    
-    SET inicio = CURRENT_TIMESTAMP(6);
-
->>>>>>> e0c54948c515f8297b69345eb75bb0e76709ab8d
     DROP VIEW IF EXISTS eventosView;
     CREATE VIEW eventosView AS SELECT tipoEsp, nombreEsp, direccion, fechaYHora 
     FROM eventos
@@ -77,18 +47,11 @@ BEGIN
     ORDER BY tipoEsp;
 
     SELECT * FROM eventosView;
-<<<<<<< HEAD
     SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
 
 END
 //
 
-=======
-    
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
-    
-END//
->>>>>>> e0c54948c515f8297b69345eb75bb0e76709ab8d
 
 DROP PROCEDURE IF EXISTS modificarEspectaculo//
 CREATE PROCEDURE modificarEspectaculo(
