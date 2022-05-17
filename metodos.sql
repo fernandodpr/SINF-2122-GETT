@@ -8,7 +8,7 @@ USE proyecto;
 \. eventoScrubEstadoPreReserva.sql
 \. localidadDeteriorada.sql
 \. newEvent.sql
-\. realizarReserva.sql
+
 \. tarifas.sql
 \. trigDeleteEntrada.sql
 

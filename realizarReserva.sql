@@ -1,4 +1,4 @@
-
+##procedimiento antiguo, unificado todo en venderentrada.sql
 
 DROP PROCEDURE IF EXISTS realizarReserva;
  
