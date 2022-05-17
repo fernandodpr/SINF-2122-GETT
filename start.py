@@ -14,7 +14,7 @@ import sys
 inicio = time.time()
 
 def random_tipo_espectaculo():
-    tipos = ["concierto", "entrevista", "teatro", "pelicula", "deportivo"]
+    tipos = ["concierto", "entrevista", "teatro", "pelicula", "deportivo", "educativo"]
     i = random.randrange(0, len(tipos))
     return tipos[i]
 
@@ -172,6 +172,32 @@ def insert_data(f, n):
     nombreGrada = "grada superior"
     numLoc = 200
     listaTarifa = {'adulto': 30, 'jubilado': 15}
+    insert_grada_e_locs(inserts, numLoc, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, horario, dirRecinto)
+    insert_tarifa(inserts, listaTarifa, maxLocReserva, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, horario, dirRecinto)
+
+    # evento anterior pero para dentro de varios dias con tAntelacionReserva anterior a hoxe para ver como aparece o evento como pechado
+    nombreEsp = "curso ciberseguridad"
+    tipoEsp = "educativo"
+    fechaProduccion = "2022-04-01"
+    productora = "UVigo"
+    participantes = "Alguen de Gradiant" 
+    penalizacion = 20
+    tValidezReserva = "00:03:00"  # t1
+    tAntelacionReserva = "48:00:00"   # t2
+    tCancelacion = "00:10:00"   # t3
+    horario = "2022-05-18 13:00:00"
+    dirRecinto = "Rua Maxwell Campus Vigo aula T211"
+    nomRecinto = "EET"
+    nombreGrada = "aula T211"
+    numLoc = 150
+    listaTarifa = {'juvenil': 60, 'adulto': 100}
+    maxLocReserva = 1
+
+    insert_espectaculo(inserts, nombreEsp, tipoEsp, fechaProduccion, productora, participantes, penalizacion, tValidezReserva, tAntelacionReserva, tCancelacion)
+    insert_horario(inserts, horario)
+    insert_recinto(inserts, dirRecinto, nomRecinto)
+    insert_horarioRecintos(inserts, horario, dirRecinto)
+    insert_evento(inserts, nombreEsp, tipoEsp, fechaProduccion, productora, horario, dirRecinto)
     insert_grada_e_locs(inserts, numLoc, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, horario, dirRecinto)
     insert_tarifa(inserts, listaTarifa, maxLocReserva, nombreGrada, nombreEsp, tipoEsp, fechaProduccion, productora, horario, dirRecinto)
 
@@ -397,6 +423,7 @@ def main():
             insert_data(f, int(sys.argv[1]))
 
         f.write("\nSELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'proyecto';")
+        f.write("\n\. metodos.sql;")
     
     fin = time.time()
     print (f"Tiempo total de ejecución = {fin-inicio}")
