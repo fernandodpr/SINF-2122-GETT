@@ -16,10 +16,10 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS buscarEventosPorTipo//
 CREATE PROCEDURE buscarEventosPorTipo(IN tipo VARCHAR(30))
 BEGIN 
-    DECLARE inicio TIMESTAMP(6);
-    SET inicio = CURRENT_TIMESTAMP(6);
+   /* DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);*/
     SELECT nombreEsp, tipoEsp, direccion, fechaYHora FROM eventos WHERE tipoEsp=tipo;
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+    /*    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';*/
 END
 //
 
@@ -27,10 +27,10 @@ END
 DROP PROCEDURE IF EXISTS listarEventosPorTipo//
 CREATE PROCEDURE listarEventosPorTipo()
 BEGIN 
-    DECLARE inicio TIMESTAMP(6);
-    SET inicio = CURRENT_TIMESTAMP(6);
+    /* DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);*/
     SELECT tipoEsp, nombreEsp, direccion, fechaYHora FROM eventos ORDER BY tipoEsp;
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+    /*    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';*/
 END
 //
 
@@ -38,8 +38,8 @@ END
 DROP PROCEDURE IF EXISTS listarEventosDisponibles//
 CREATE PROCEDURE listarEventosDisponibles()
 BEGIN 
-    DECLARE inicio TIMESTAMP(6);
-    SET inicio = CURRENT_TIMESTAMP(6);
+    /* DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);*/
     DROP VIEW IF EXISTS eventosView;
     CREATE VIEW eventosView AS SELECT tipoEsp, nombreEsp, direccion, fechaYHora 
     FROM eventos
@@ -47,7 +47,7 @@ BEGIN
     ORDER BY tipoEsp;
 
     SELECT * FROM eventosView;
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+    /*    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';*/
 
 END
 //
@@ -65,8 +65,8 @@ CREATE PROCEDURE modificarEspectaculo(
     IN t3 TIME
 )
 BEGIN 
-    DECLARE inicio TIMESTAMP(6);
-    SET inicio = CURRENT_TIMESTAMP(6);
+  /* DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);*/
     #SET @espectaculo = (SELECT * FROM espectaculos WHERE nombreEsp=INnombreEsp AND tipoEsp=INtipoEsp AND fechaProduccion=INfechaProduccion AND productora=INproductora);
 
     IF (INpenalizacion IS NOT NULL) THEN
@@ -88,7 +88,7 @@ BEGIN
         UPDATE espectaculos SET tCancelacion = t3
         WHERE nombreEsp=INnombreEsp AND tipoEsp=INtipoEsp AND fechaProduccion=INfechaProduccion AND productora=INproductora;
     END IF;
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+    /*    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';*/
 
 END
 //
@@ -102,15 +102,15 @@ CREATE PROCEDURE insertGrada(
     IN Espectaculo_fecha DATE,
     IN Espectaculo_productora VARCHAR(30),
     IN Evento_fecha VARCHAR(30),
-    IN Evento_direccion varchar(50),
+    IN Evento_direccion varchar(50)
 )
 BEGIN 
-    DECLARE inicio TIMESTAMP(6);
-    SET inicio = CURRENT_TIMESTAMP(6);
+/* DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);*/
     
     INSERT IGNORE INTO gradas VALUES (Grada_nombre, Espectaculo_nombre, Espectaculo_tipo, Espectaculo_fecha, Espectaculo_productora, Evento_fecha, Evento_direccion);
 
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+    /*    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';*/
 
 END
 //
