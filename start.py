@@ -406,6 +406,8 @@ def main():
         f.write("DROP DATABASE IF EXISTS proyecto;\n")
         f.write("CREATE DATABASE proyecto;\n")
         f.write("USE proyecto;\n")
+        f.write("\nDECLARE inicio TIMESTAMP(6);")
+        f.write("\nSET inicio = CURRENT_TIMESTAMP(6);\n")
         f.write(create_espectaculos_table + "\n")
         f.write(create_horarios_table + "\n")
         f.write(create_recintos_table + "\n")
@@ -424,6 +426,8 @@ def main():
 
         f.write("\nSELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'proyecto';")
         f.write("\n\. metodos.sql;")
+        f.write("\nSELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';")
+
     
     fin = time.time()
     print (f"Tiempo total de ejecución = {fin-inicio}")
