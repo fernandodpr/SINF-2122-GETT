@@ -13,6 +13,11 @@ CREATE PROCEDURE consultarEvento(
 )
 BEGIN
 
+    #estou a facer probas metendo cantidades moi altas de tuplas para ver ben os tempos (con poucas sae sempre 0 seg)
+    DECLARE inicio TIMESTAMP(6);
+    
+    SET inicio = CURRENT_TIMESTAMP(6);
+
     SET @eventos:= (SELECT COUNT(*) 
                     FROM localidades
                     WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
@@ -21,7 +26,7 @@ BEGIN
     
     IF (@eventos = 0) THEN
     
-        SELECT 'El evento seleccionado no esta disponible';
+        SELECT 'El evento seleccionado no esta disponible' AS 'Error en la consulta';
     
     ELSE
     
@@ -34,7 +39,7 @@ BEGIN
             
         IF (@grada = 0) THEN
         
-            SELECT 'La grada seleccionada no esta disponible';
+            SELECT 'La grada seleccionada no esta disponible' AS 'Error en la consulta';
         
         ELSE
         
@@ -47,17 +52,29 @@ BEGIN
                                     
             IF (@localidades = 0) THEN
             
-                SELECT 'La grada seleccionada no dispone de localidades libres para este evento';
+                SELECT 'La grada seleccionada no dispone de localidades libres para este evento' AS 'Error en la consulta';
             
             END IF;
             
-            SELECT asientoLocalidad AS Localidad, estado AS Estado, nombreGrada AS Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProduccion AS Produccion, 
-            fechaYHora as Horario, direccion AS Direccion_recinto
-            FROM localidades 
+            
+            SELECT Grada, Espectaculo_nombre AS Espectaculo, Espectaculo_tipo AS Tipo, Espectaculo_fecha_produccion AS Produccion, 
+            Evento_fecha as Horario, Evento_direccion AS Direccion_recinto;
+            
+            SELECT precio AS Precio, tipoUsuario AS Usuario 
+            FROM tarifas 
             WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
                 AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
                 AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
                 AND nombreGrada = Grada;
+                
+                
+            SELECT asientoLocalidad AS Localidad, estado AS Estado
+            FROM localidades
+            WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
+                AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
+                AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
+                AND nombreGrada = Grada;
+                
         
         END IF;
             
@@ -65,6 +82,9 @@ BEGIN
     
     END IF;
     
+    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+    
 END//
 
+DELIMITER ;
 
