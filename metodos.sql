@@ -41,6 +41,6 @@ BEGIN
     SELECT * FROM eventosView;
 END
 //
-
+DELIMITER ;
 
 
