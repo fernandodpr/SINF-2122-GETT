@@ -10,9 +10,7 @@ CREATE PROCEDURE anularReserva(
 )
 BEGIN
 
-DECLARE inicio TIMESTAMP(6);
-    
-SET inicio = CURRENT_TIMESTAMP(6);
+
 
 SET @IN_nombreEsp := (SELECT nombreEsp FROM entradas WHERE asientoLocalidad=IN_asientoLocalidad AND nombreGrada=IN_nombreGrada AND fechaYHora=IN_fechaYHora AND direccion=IN_direccion);
 SET @IN_fechaProduccion := (SELECT fechaProduccion FROM entradas WHERE asientoLocalidad=IN_asientoLocalidad AND nombreGrada=IN_nombreGrada AND fechaYHora=IN_fechaYHora AND direccion=IN_direccion);
@@ -60,7 +58,6 @@ END IF;
 
 SELECT 'Reembolso: '+@reembolso;
 
-SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
 
 END
 //

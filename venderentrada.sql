@@ -29,9 +29,7 @@ BEGIN
  ###### Se puede reservar la localidad?
  ###### Realizar reserva
  
-    DECLARE inicio TIMESTAMP(6);
-    
-    SET inicio = CURRENT_TIMESTAMP(6);
+
  
     SET @localidad := (SELECT COUNT(*) FROM localidades WHERE asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
     SET @estadoEvento = (SELECT estado FROM eventos WHERE nombreEsp=Espectaculo_nombre AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
@@ -167,7 +165,7 @@ BEGIN
 
     END IF;
     
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+    
 
 END//
 

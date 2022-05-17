@@ -9,8 +9,7 @@ CREATE PROCEDURE consultarEvento(
 )
 BEGIN
 
-    DECLARE inicio TIMESTAMP(6);
-    SET inicio = CURRENT_TIMESTAMP(6);
+
 
     SET @eventos:= (SELECT COUNT(*) 
                     FROM localidades
@@ -67,7 +66,6 @@ BEGIN
     
     END IF;
     
-    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
     
 END//
 
