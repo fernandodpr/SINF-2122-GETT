@@ -3,10 +3,6 @@ DROP PROCEDURE IF EXISTS consultarEvento;
 DELIMITER //
 
 CREATE PROCEDURE consultarEvento(
-    IN Espectaculo_nombre varchar(20),
-    IN Espectaculo_tipo varchar(20),
-    IN Espectaculo_fecha_produccion DATE,
-    IN Espectaculo_productora varchar(20),
     IN Evento_fecha DATETIME,
     IN Evento_direccion varchar(50),
     IN Grada varchar(20)
@@ -50,8 +46,10 @@ BEGIN
             END IF;
             
             
-            SELECT Grada, Espectaculo_nombre AS Espectaculo, Espectaculo_tipo AS Tipo, Espectaculo_fecha_produccion AS Produccion, 
-            Evento_fecha as Horario, Evento_direccion AS Direccion_recinto;
+            SELECT Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProd AS Produccion, 
+            Evento_fecha as Horario, Evento_direccion AS Direccion_recinto
+            FROM evento
+            WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion;
             
             SELECT precio AS Precio, tipoUsuario AS Usuario 
             FROM tarifas 
