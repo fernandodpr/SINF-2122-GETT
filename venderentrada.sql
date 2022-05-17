@@ -54,11 +54,12 @@ BEGIN
 
 
                 SET @locLibres := (SELECT COUNT(*) FROM localidades WHERE estado='Libre' AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion); 
+                SET @locres := (SELECT COUNT(*) FROM localidades WHERE estado='Prereservado' AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion); 
 
                 SELECT 'El tipo de usuario puede asistir a esta grada.';
                 IF (@maximo < Num_localidades) THEN
                     SELECT 'Esta superando el limite de localidades por reserva permitido.';
-                ELSEIF (@locLibres<Num_localidades) THEN
+                ELSEIF ((@locLibres+@locres)<Num_localidades) THEN
                     SELECT 'La cantidad de localidades libres es inferior a las deseadas.'; 
                 ELSE
                     
