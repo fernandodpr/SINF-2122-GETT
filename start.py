@@ -87,6 +87,8 @@ def insert_horarios(f):
     f.write(query)
     query = f"\nINSERT INTO horarios VALUES ('2021-09-01 18:00:00');"
     f.write(query)
+    query = f"\nINSERT INTO horarios VALUES ('2020-09-01 03:00:00');"
+    f.write(query)
 
 
 def insert_horariosRecintos(f, n):
@@ -96,6 +98,8 @@ def insert_horariosRecintos(f, n):
         query = f"\nINSERT INTO horariosRecintos VALUES ('2022-09-01 18:00:00', '{dir}');"
         f.write(query)
         query = f"\nINSERT INTO horariosRecintos VALUES ('2021-09-01 18:00:00', '{dir}');"
+        f.write(query)
+        query = f"\nINSERT INTO horariosRecintos VALUES ('2020-09-01 03:00:00', '{dir}');"
         f.write(query)
 
 
@@ -116,6 +120,7 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO recintos VALUES ('Auditorio Mar de Vigo', 'Auditorio Mar de Vigo');")
     inserts.append("\nINSERT INTO horarios VALUES ('2022-07-01 19:00:00');")
     inserts.append("\nINSERT INTO horarios VALUES ('2022-07-10 20:30:00');")
+   
     inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 1');")
     inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-01 19:00:00', 'Cines Gran Via Vigo sala 2');")
     inserts.append("\nINSERT INTO horariosRecintos VALUES ('2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
@@ -191,6 +196,8 @@ def insert_eventos(f, n):
         query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, '00:{tValidezReserva}:00', '00:{tAntelacionReserva}:00', '00:{tCancelacion}:00');"
         f.write(query)
         query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C','Abierto');"
+        f.write(query)
+        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2020-09-01 03:00:00', 'Calle de las flores número {i} puerta C','Abierto');"
         f.write(query)
         query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
         f.write(query)

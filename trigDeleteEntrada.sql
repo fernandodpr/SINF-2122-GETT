@@ -1,5 +1,5 @@
 DELIMITER //
-
+DROP TRIGGER IF EXISTS trigDeleteEntrada//
 CREATE TRIGGER trigDeleteEntrada
 AFTER DELETE
 ON entradas FOR EACH ROW
