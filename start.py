@@ -31,11 +31,11 @@ def random_fecha_produccion():
 
 
 def random_penalizacion():
-    return str(random.randrange(1,10))
+    return str(random.randrange(1,11))
 
 
 def random_tValidezReserva():
-    return str(random.randrange(10,20))
+    return str(random.randrange(10,21))
 
 
 def random_tAntelacionReserva():
@@ -43,7 +43,10 @@ def random_tAntelacionReserva():
 
 
 def random_tCancelacion():
-    return str(random.randrange(15, 30))
+    return str(random.randrange(15, 31))
+
+def random_num_localidades():
+    return random.randrange(10, 51)
     
 
 def insert_clientes(f):
@@ -178,10 +181,7 @@ def insert_eventos(f, n):
     inserts.append("\nINSERT INTO tarifas VALUES ('adulto', 18, 5, 'grada superior', 'Hamlet', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
     inserts.append("\nINSERT INTO tarifas VALUES ('jubilado', 10, 5, 'grada superior', 'Hamlet', 'teatro', '2010-01-01', 'Teatro andante', '2022-07-10 20:30:00', 'Auditorio Mar de Vigo');")
 
-
-    for i in range(len(inserts)):
-        f.write(inserts[i])
-
+    # creacion por defecto
     for i in range(n):
         nombreEsp = f"espectaculo {i}"
         tipoEsp = random_tipo_espectaculo()
@@ -192,28 +192,40 @@ def insert_eventos(f, n):
         tValidezReserva = random_tValidezReserva()
         tAntelacionReserva = random_tAntelacionReserva()
         tCancelacion = random_tCancelacion()
+        numLoc = random_num_localidades()
+        fechaYHora1 = "2022-09-01 18:00:00"
+        fechaYHora2 = "2020-09-01 03:00:00"
+        dirDefault = f"Calle de las flores número {i} puerta C"
 
-        query = f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, '00:{tValidezReserva}:00', '00:{tAntelacionReserva}:00', '00:{tCancelacion}:00');"
-        f.write(query)
-        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C','Abierto');"
-        f.write(query)
-        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2020-09-01 03:00:00', 'Calle de las flores número {i} puerta C','Abierto');"
-        f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
-        f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
-        f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2022-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
-        f.write(query)
+        #espectaculos por defecto
+        inserts.append(f"\nINSERT INTO espectaculos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{participantes}', {penalizacion}, '00:{tValidezReserva}:00', '00:{tAntelacionReserva}:00', '00:{tCancelacion}:00');")
         
-        query = f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C','Abierto');"
-        f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
-        f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
-        f.write(query)
-        query = f"\nINSERT INTO gradas VALUES ('grada 3', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '2021-09-01 18:00:00', 'Calle de las flores número {i} puerta C');"
-        f.write(query)
+        # 2 eventos por defecto por espectaculo (distintas datas mesmo recinto)
+        inserts.append(f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora1}', '{dirDefault}','Abierto');")
+        inserts.append(f"\nINSERT INTO eventos VALUES ('{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora2}', '{dirDefault}','Abierto');")
+
+        # 2 gradas por defecto por evento
+        inserts.append(f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora1}', '{dirDefault}');")
+        inserts.append(f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora1}', '{dirDefault}');")
+        inserts.append(f"\nINSERT INTO gradas VALUES ('grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora2}', '{dirDefault}');")
+        inserts.append(f"\nINSERT INTO gradas VALUES ('grada 2', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora2}', '{dirDefault}');")
+
+        # localidades por defecto por grada
+        insert_localidades(inserts, numLoc, 'grada 1', nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora1, dirDefault)
+        insert_localidades(inserts, numLoc, 'grada 2', nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora1, dirDefault)
+        insert_localidades(inserts, numLoc, 'grada 1', nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora2, dirDefault)
+        insert_localidades(inserts, numLoc, 'grada 2', nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora2, dirDefault)
+
+        # tarifas por defecto
+        listaTarifaDefault = {'bebe': 0, 'infantil': 5, 'juvenil': 8, 'adulto': 10, 'jubilado': 5}
+        maxLocReservaDefault = 5
+
+        for t in listaTarifaDefault.keys():
+            inserts.append(f"\nINSERT INTO tarifas VALUES ('{t}', '{listaTarifaDefault.get(t)}', '{maxLocReservaDefault}', 'grada 1', '{nombreEsp}', '{tipoEsp}', '{fechaProduccion}', '{productora}', '{fechaYHora1}', '{dirDefault}');")
+
+    for i in range(len(inserts)):
+        f.write(inserts[i])
+
 
 ### MAIN FUNCTION ###
 def main():
