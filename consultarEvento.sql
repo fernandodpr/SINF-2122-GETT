@@ -13,7 +13,6 @@ CREATE PROCEDURE consultarEvento(
 )
 BEGIN
 
-    #estou a facer probas metendo cantidades moi altas de tuplas para ver ben os tempos (con poucas sae sempre 0 seg)
     DECLARE inicio TIMESTAMP(6);
     
     SET inicio = CURRENT_TIMESTAMP(6);
