@@ -46,7 +46,7 @@ BEGIN
             END IF;
             
             
-            SELECT Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProd AS Produccion, 
+            SELECT Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProduccion AS Produccion, productora As Productora 
             Evento_fecha as Horario, Evento_direccion AS Direccion_recinto
             FROM eventos
             WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion;
