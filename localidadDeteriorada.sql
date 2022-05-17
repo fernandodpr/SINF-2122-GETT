@@ -3,6 +3,11 @@ drop procedure if exists localidadDeteriorada;
 delimiter //
 
 create procedure localidadDeteriorada(in asiento int, in nomGrada varchar(30), in fecha datetime, in direc varchar(50)) begin
+
+        DECLARE inicio TIMESTAMP(6);
+    
+        SET inicio = CURRENT_TIMESTAMP(6);
+
 	declare estadoViejo varchar(20);
 	declare asientosLibres int;
 	declare asientosExceso int;
@@ -132,6 +137,9 @@ create procedure localidadDeteriorada(in asiento int, in nomGrada varchar(30), i
 		and nombreGrada = nomGrada
 		and fechaYHora = fecha
 		and direccion = direc;
+		
+	SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+		
 end//
 
 delimiter ;
