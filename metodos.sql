@@ -16,7 +16,10 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS buscarEventosPorTipo//
 CREATE PROCEDURE buscarEventosPorTipo(IN tipo VARCHAR(30))
 BEGIN 
+    DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);
     SELECT nombreEsp, tipoEsp, direccion, fechaYHora FROM eventos WHERE tipoEsp=tipo;
+    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
 END
 //
 
@@ -24,7 +27,10 @@ END
 DROP PROCEDURE IF EXISTS listarEventosPorTipo//
 CREATE PROCEDURE listarEventosPorTipo()
 BEGIN 
+    DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);
     SELECT tipoEsp, nombreEsp, direccion, fechaYHora FROM eventos ORDER BY tipoEsp;
+    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
 END
 //
 
@@ -32,6 +38,8 @@ END
 DROP PROCEDURE IF EXISTS listarEventosDisponibles//
 CREATE PROCEDURE listarEventosDisponibles()
 BEGIN 
+    DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);
     DROP VIEW IF EXISTS eventosView;
     CREATE VIEW eventosView AS SELECT tipoEsp, nombreEsp, direccion, fechaYHora 
     FROM eventos
@@ -39,6 +47,8 @@ BEGIN
     ORDER BY tipoEsp;
 
     SELECT * FROM eventosView;
+    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+
 END
 //
 
@@ -55,27 +65,31 @@ CREATE PROCEDURE modificarEspectaculo(
     IN t3 TIME
 )
 BEGIN 
+    DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);
     #SET @espectaculo = (SELECT * FROM espectaculos WHERE nombreEsp=INnombreEsp AND tipoEsp=INtipoEsp AND fechaProduccion=INfechaProduccion AND productora=INproductora);
 
-    IF (penalizacion IS NOT NULL) THEN
+    IF (INpenalizacion IS NOT NULL) THEN
         UPDATE espectaculos SET penalizacion = INpenalizacion
-        WHERE nombreEsp=nombreEsp AND tipoEsp=tipoEsp AND fechaProduccion=fechaProduccion AND productora=productora;
+        WHERE nombreEsp=INnombreEsp AND tipoEsp=INtipoEsp AND fechaProduccion=INfechaProduccion AND productora=INproductora;
     END IF;
 
     IF (t1 IS NOT NULL) THEN
         UPDATE espectaculos SET tValidezReserva = t1 
-        WHERE nombreEsp=nombreEsp AND tipoEsp=tipoEsp AND fechaProduccion=fechaProduccion AND productora=productora;
+        WHERE nombreEsp=INnombreEsp AND tipoEsp=INtipoEsp AND fechaProduccion=INfechaProduccion AND productora=INproductora;
     END IF;
 
     IF (t2 IS NOT NULL) THEN
         UPDATE espectaculos SET tAntelacionReserva = t2
-        WHERE nombreEsp=nombreEsp AND tipoEsp=tipoEsp AND fechaProduccion=fechaProduccion AND productora=productora;
+        WHERE nombreEsp=INnombreEsp AND tipoEsp=INtipoEsp AND fechaProduccion=INfechaProduccion AND productora=INproductora;
     END IF;
 
     IF (t3 IS NOT NULL) THEN
         UPDATE espectaculos SET tCancelacion = t3
-        WHERE nombreEsp=nombreEsp AND tipoEsp=tipoEsp AND fechaProduccion=fechaProduccion AND productora=productora;
+        WHERE nombreEsp=INnombreEsp AND tipoEsp=INtipoEsp AND fechaProduccion=INfechaProduccion AND productora=INproductora;
     END IF;
+    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+
 END
 //
 
