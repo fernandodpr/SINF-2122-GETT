@@ -122,7 +122,7 @@ def insert_data(f, n):
     nomRecinto = "Cine Gran Via"
     nombreGrada = "grada 1"
     numLoc = 30
-    listaTarifa = {'bebe': 0, 'infantil': 5, 'juvenil': 8, 'adulto': 10, 'jubilado': 5}
+    listaTarifa = {'bebe': 1, 'infantil': 5, 'juvenil': 8, 'adulto': 10, 'jubilado': 5}
     maxLocReserva = 5
 
     insert_espectaculo(inserts, nombreEsp, tipoEsp, fechaProduccion, productora, participantes, penalizacion, tValidezReserva, tAntelacionReserva, tCancelacion)
@@ -242,7 +242,7 @@ def insert_data(f, n):
         insert_grada_e_locs(inserts, numLoc, gradaDefault2, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora2, dirDefault)
 
         # tarifas por defecto
-        listaTarifaDefault = {'bebe': 0, 'infantil': 5, 'juvenil': 8, 'adulto': 10, 'jubilado': 5}
+        listaTarifaDefault = {'bebe': 1, 'infantil': 5, 'juvenil': 8, 'adulto': 10, 'jubilado': 5}
         maxLocReservaDefault = 5
 
         insert_tarifa(inserts, listaTarifaDefault, maxLocReservaDefault, gradaDefault1, nombreEsp, tipoEsp, fechaProduccion, productora, fechaYHora1, dirDefault)

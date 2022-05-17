@@ -11,7 +11,7 @@ CREATE PROCEDURE venderentrada(
     IN Espectaculo_tipo VARCHAR(30),
     IN Espectaculo_fecha DATE,
     IN Espectaculo_productora VARCHAR(30),
-    IN Evento_fecha VARCHAR(30),
+    IN Evento_fecha DATETIME,
     IN Evento_direccion varchar(50),
     IN Cliente_correo varchar(30),
     IN modo varchar(30),
@@ -134,8 +134,7 @@ BEGIN
                                     ##Esta localidad está prereservada, sólo disponible para compra
                                     SELECT 'Ejecute el método en modo compra, la localidad ha sido reservada con anterioridad.';
                                 END IF;
-                            ELSE 
-                            SELECT 'A';
+                            
                             
                         END CASE;
 
