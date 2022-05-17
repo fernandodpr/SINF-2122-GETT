@@ -1,7 +1,6 @@
 USE proyecto;
 
 \. venderentrada.sql
-\. anularReserva.sql
 \. consultarEvento.sql
 \. crearEspectaculo.sql
 \. eventoScrubEstadoEvento.sql
@@ -10,7 +9,7 @@ USE proyecto;
 \. newEvent.sql
 \. realizarReserva.sql
 \. tarifas.sql
-\. venderentrada.sql
+\. trigDeleteEntrada.sql
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS buscarEventosPorTipo//
@@ -21,7 +20,7 @@ END
 //
 
 
-DROP PROCEDURE IF EXISTS listarEventosPorTipo//
+DROP PROCEDURE IF EXISTS 0.01//
 CREATE PROCEDURE listarEventosPorTipo()
 BEGIN 
     SELECT tipoEsp, nombreEsp, direccion, fechaYHora FROM eventos ORDER BY tipoEsp;
