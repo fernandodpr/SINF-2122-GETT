@@ -4,7 +4,7 @@ USE proyecto;
 \. consultarEvento.sql
 \. crearEspectaculo.sql
 \. eventoScrubEstadoEvento.sql
-\. eventoScrubEstadoPreReserva.sql
+/*\. eventoScrubEstadoPreReserva.sql*/
 \. localidadDeteriorada.sql
 \. newEvent.sql
 \. realizarReserva.sql
@@ -42,18 +42,4 @@ END
 //
 
 
-DROP PROCEDURE IF EXISTS crearEspectaculo//
-CREATE PROCEDURE crearEspectaculo(IN nombreEsp VARCHAR(30), IN tipoEsp VARCHAR(30), IN fechaProd DATE, IN productora VARCHAR(30), IN participantes VARCHAR(30), IN penalizacion INT, IN tValidezReserva INT, IN tAntelacionReserva INT, IN tCancelacion INT)
-BEGIN 
-	INSERT INTO espectaculos VALUES (nombreEsp, tipoEsp, fechaProd, productora, participantes, penalizacion, tValidezReserva, tAntelacionReserva, tCancelacion);
-END
-//
 
-/** 
-
-DROP PROCEDURE IF EXISTS localidadesDelEventoYGrada// 
-CREATE PROCEDURE localidadesDelEventoYGrada(IN nombreGrada VARCHAR(30), IN nombreEsp VARCHAR(30), IN tipoEsp VARCHAR(30), IN fechaProd DATE, IN productora VARCHAR(30), IN fechaYHora DATETIME, IN dirRecinto VARCHAR(50))
-BEGIN 
-    
-END
-//**/

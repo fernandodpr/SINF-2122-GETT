@@ -8,11 +8,11 @@ CREATE PROCEDURE realizarReserva(
     IN Num_localidades INT,
     IN UsuarioReserva varchar(30),
     IN PagadaAlMomento BOOLEAN,
-    IN Grada varchar(20),
-    IN NomEsp varchar(20),
-    IN TipoEsp varchar(20),
-    IN ProdEsp varchar(20),
-    IN FechaProdEsp DATE,
+    IN Grada varchar(30),
+    IN NomEsp varchar(30),
+    IN TipoEsp varchar(30),
+    IN ProdEsp varchar(30),
+    IN FechaProdEsp DATETIME,
     IN HoraEvento DATETIME,
     IN Direccion varchar(50)
 
