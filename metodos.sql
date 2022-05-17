@@ -39,9 +39,7 @@ BEGIN
     ORDER BY tipoEsp;
 
     SELECT * FROM eventosView;
-END
-//
-DELIMITER ;
+END//
 
 DROP PROCEDURE IF EXISTS modificarEspectaculo//
 CREATE PROCEDURE modificarEspectaculo(
@@ -76,8 +74,7 @@ BEGIN
         UPDATE espectaculos SET tCancelacion = t3
         WHERE nombreEsp=nombreEsp AND tipoEsp=tipoEsp AND fechaProduccion=fechaProduccion AND productora=productora;
     END IF;
-END
-//
+END//
 
-
+DELIMITER ;
 
