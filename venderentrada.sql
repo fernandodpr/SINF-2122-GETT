@@ -31,7 +31,7 @@ BEGIN
     SET @localidad := (SELECT COUNT(*) FROM localidades WHERE asientoLocalidad=Asiento AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
     SET @estadoEvento = (SELECT estado FROM eventos WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion);
     
-    SELECT @estadoEvento:
+    SELECT @estadoEvento;
 
     IF (@estadoEvento='Abierto') THEN
         SELECT @localidad;
