@@ -4,9 +4,9 @@ delimiter //
 
 create procedure localidadDeteriorada(in asiento int, in nomGrada varchar(30), in fecha datetime, in direc varchar(50), IN deteriorar BOOLEAN ) begin
 
-        DECLARE inicio TIMESTAMP(6);
+	/*DECLARE inicio TIMESTAMP(6);
     
-        SET inicio = CURRENT_TIMESTAMP(6);
+	SET inicio = CURRENT_TIMESTAMP(6);*/
 
 	declare estadoViejo varchar(20);
 	declare asientosLibres int;
@@ -147,7 +147,7 @@ create procedure localidadDeteriorada(in asiento int, in nomGrada varchar(30), i
 	END IF;
 
 		
-	SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+	##SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
 		
 end//
 
