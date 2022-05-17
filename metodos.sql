@@ -58,7 +58,7 @@ CREATE PROCEDURE modificarEspectaculo(
     IN INnombreEsp VARCHAR(30),
     IN INtipoEsp varchar(30),
     IN INfechaProduccion DATE,
-    IN INproductora VARCHAR(30) ,
+    IN INproductora VARCHAR(30),
     IN INpenalizacion INT,
     IN t1 TIME,
     IN t2 TIME,
@@ -94,4 +94,28 @@ END
 //
 
 
+DROP PROCEDURE IF EXISTS insertGrada//
+CREATE PROCEDURE insertGrada(
+    IN Grada_nombre VARCHAR(30),
+    IN Espectaculo_nombre VARCHAR(30),
+    IN Espectaculo_tipo VARCHAR(30),
+    IN Espectaculo_fecha DATE,
+    IN Espectaculo_productora VARCHAR(30),
+    IN Evento_fecha VARCHAR(30),
+    IN Evento_direccion varchar(50),
+)
+BEGIN 
+    DECLARE inicio TIMESTAMP(6);
+    SET inicio = CURRENT_TIMESTAMP(6);
+    
+    INSERT IGNORE INTO gradas VALUES (Grada_nombre, Espectaculo_nombre, Espectaculo_tipo, Espectaculo_fecha, Espectaculo_productora, Evento_fecha, Evento_direccion);
+
+    SELECT timestampdiff(MICROSECOND, inicio, CURRENT_TIMESTAMP(6))/1000000 AS 'Tiempo de ejecucion';
+
+END
+//
+
+
+
+DELIMITER ;
 

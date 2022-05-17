@@ -11,7 +11,7 @@ CREATE PROCEDURE venderentrada(
     IN Espectaculo_tipo VARCHAR(30),
     IN Espectaculo_fecha DATE,
     IN Espectaculo_productora VARCHAR(30),
-    IN Evento_fecha DATETIME,
+    IN Evento_fecha VARCHAR(30),
     IN Evento_direccion varchar(50),
     IN Cliente_correo varchar(30),
     IN modo varchar(30),
@@ -82,7 +82,7 @@ BEGIN
                                         INSERT INTO entradas VALUES('Efectivo',NOW(),Cliente_correo,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
                                         UPDATE localidades SET estado='Reservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                                         SET @contador_exitos = @contador_exitos + 1;
-                                        SELECT 'Comprar en ventanilla y efectivo hecha correctamente.';
+                                        SELECT 'Comprar en ventanilla y efectivo hecha correctamente', @PRECIO as Precio;
                                         
                                     ELSE
                                         ##Sólo se puede comprar directamente en ventanilla
@@ -97,7 +97,7 @@ BEGIN
                                         UPDATE localidades SET estado='Prereservado' WHERE  asientoLocalidad=@localiAdd AND nombreGrada=Grada_nombre AND nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo AND fechaProduccion=Espectaculo_fecha AND productora=Espectaculo_productora AND fechaYHora=Evento_fecha AND direccion=Evento_direccion;
                                         INSERT INTO entradas VALUES('Prereserva',NOW(),Cliente_correo,Espectador_tipo,@localiAdd,Grada_nombre,Espectaculo_nombre,Espectaculo_tipo,Espectaculo_fecha,Espectaculo_productora,Evento_fecha,Evento_direccion);
                                         SET @contador_exitos = @contador_exitos + 1;
-                                        SELECT 'Prereserva realizada. Puede haefectuar el pago.';
+                                        SELECT 'Prereserva realizada. Puede efectuar el pago.';
 
                                     ELSE
                                         SELECT 'Para realizar una pre-reserva el cliente debe registrarse previamente.';
@@ -135,7 +135,8 @@ BEGIN
                                     ##Esta localidad está prereservada, sólo disponible para compra
                                     SELECT 'Ejecute el método en modo compra, la localidad ha sido reservada con anterioridad.';
                                 END IF;
-                            
+                            ELSE 
+                            leave bucle;
                             
                         END CASE;
 
