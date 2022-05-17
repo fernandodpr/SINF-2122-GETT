@@ -12,7 +12,7 @@ BEGIN
   DELETE entradas FROM entradas INNER JOIN espectaculos ON entradas.nombreEsp=espectaculos.nombreEsp 
     AND entradas.tipoEsp=espectaculos.tipoEsp AND entradas.productora=espectaculos.productora 
     AND entradas.fechaProduccion=espectaculos.fechaProduccion   
-    WHERE SUBTIME(NOW(),entradas.horaReserva)>espectaculos.tValidezReserva  AND entradas.formaPago='Prereserva' ;
+    WHERE TIMEDIFF(NOW(),entradas.horaReserva) > espectaculos.tValidezReserva  AND entradas.formaPago='Prereserva' ;
 
     
 
