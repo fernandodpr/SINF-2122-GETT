@@ -19,9 +19,7 @@ BEGIN
 
     SET @eventos:= (SELECT COUNT(*) 
                     FROM localidades
-                    WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                        AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora
-                        AND fechaYHora = Evento_fecha AND direccion = Evento_direccion);
+                    WHERE fechaYHora = Evento_fecha AND direccion = Evento_direccion);
     
     IF (@eventos = 0) THEN
     
@@ -31,9 +29,7 @@ BEGIN
     
         SET @grada:= (SELECT COUNT(*) 
                       FROM localidades
-                      WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                          AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                          AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
+                      WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
                           AND nombreGrada = Grada);
             
         IF (@grada = 0) THEN
@@ -44,10 +40,8 @@ BEGIN
         
             SET @localidades:= (SELECT COUNT(*) 
                                 FROM localidades
-                                WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                                    AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                                    AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
-                                    AND estado = 'Libre');
+                                WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
+                                    AND nombreGrada = Grada AND estado = 'Libre');
                                     
             IF (@localidades = 0) THEN
             
@@ -61,20 +55,15 @@ BEGIN
             
             SELECT precio AS Precio, tipoUsuario AS Usuario 
             FROM tarifas 
-            WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
+            WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
                 AND nombreGrada = Grada;
                 
                 
             SELECT asientoLocalidad AS Localidad, estado AS Estado
             FROM localidades
-            WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
+            WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
                 AND nombreGrada = Grada;
-                
-        
+                    
         END IF;
             
         
