@@ -10,7 +10,6 @@ CREATE PROCEDURE consultarEvento(
 BEGIN
 
     DECLARE inicio TIMESTAMP(6);
-    
     SET inicio = CURRENT_TIMESTAMP(6);
 
     SET @eventos:= (SELECT COUNT(*) 
