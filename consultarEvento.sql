@@ -3,10 +3,6 @@ DROP PROCEDURE IF EXISTS consultarEvento;
 DELIMITER //
 
 CREATE PROCEDURE consultarEvento(
-    IN Espectaculo_nombre varchar(20),
-    IN Espectaculo_tipo varchar(20),
-    IN Espectaculo_fecha_produccion DATE,
-    IN Espectaculo_productora varchar(20),
     IN Evento_fecha DATETIME,
     IN Evento_direccion varchar(50),
     IN Grada varchar(20)
@@ -19,9 +15,7 @@ BEGIN
 
     SET @eventos:= (SELECT COUNT(*) 
                     FROM localidades
-                    WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                        AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora
-                        AND fechaYHora = Evento_fecha AND direccion = Evento_direccion);
+                    WHERE fechaYHora = Evento_fecha AND direccion = Evento_direccion);
     
     IF (@eventos = 0) THEN
     
@@ -31,9 +25,7 @@ BEGIN
     
         SET @grada:= (SELECT COUNT(*) 
                       FROM localidades
-                      WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                          AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                          AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
+                      WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
                           AND nombreGrada = Grada);
             
         IF (@grada = 0) THEN
@@ -44,10 +36,8 @@ BEGIN
         
             SET @localidades:= (SELECT COUNT(*) 
                                 FROM localidades
-                                WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                                    AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                                    AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
-                                    AND estado = 'Libre');
+                                WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
+                                    AND nombreGrada = Grada AND estado = 'Libre');
                                     
             IF (@localidades = 0) THEN
             
@@ -56,25 +46,22 @@ BEGIN
             END IF;
             
             
-            SELECT Grada, Espectaculo_nombre AS Espectaculo, Espectaculo_tipo AS Tipo, Espectaculo_fecha_produccion AS Produccion, 
-            Evento_fecha as Horario, Evento_direccion AS Direccion_recinto;
+            SELECT Grada, nombreEsp AS Espectaculo, tipoEsp AS Tipo, fechaProduccion AS Produccion, productora As Productora, 
+            Evento_fecha as Horario, Evento_direccion AS Direccion_recinto
+            FROM eventos
+            WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion;
             
             SELECT precio AS Precio, tipoUsuario AS Usuario 
             FROM tarifas 
-            WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
+            WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
                 AND nombreGrada = Grada;
                 
                 
             SELECT asientoLocalidad AS Localidad, estado AS Estado
             FROM localidades
-            WHERE nombreEsp=Espectaculo_nombre AND tipoEsp=Espectaculo_tipo 
-                AND fechaProduccion=Espectaculo_fecha_produccion AND productora=Espectaculo_productora 
-                AND fechaYHora=Evento_fecha AND direccion=Evento_direccion
+            WHERE fechaYHora=Evento_fecha AND direccion=Evento_direccion
                 AND nombreGrada = Grada;
-                
-        
+                    
         END IF;
             
         
